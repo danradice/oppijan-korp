@@ -1,7 +1,7 @@
 import './App.css'
 import { useState } from 'react'
 
-function Sentence({ text }) {
+function Sentence({ text }: { text: string }) {
   return(
     <div className='w-4/5 max-w-3xl mt-5 mx-auto px-3 py-2 border rounded-md shadow-sm'>
       <p className='text-center'>{text}</p>
