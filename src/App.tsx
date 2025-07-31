@@ -1,6 +1,7 @@
 import './App.css'
-import { useState, type FormEvent } from 'react'
+import { useState } from 'react'
 import Form from './components/Form'
+import type { KorpResponse, KorpKwic, KorpToken } from './types'
 
 function Sentence({ text }: { text: string }) {
   return(
@@ -11,34 +12,13 @@ function Sentence({ text }: { text: string }) {
 }
 
 function App() {
+  const [sents, setSents] = useState<string[]>([])
 
-  const dummySents = [
-    'ne testit voi joskus	mennä pieleen, mulla kävi joskus niin.',
-    'Kerrommehan tuon myöst ystäville, joten ei voi	mennä pieleen, jos pystyy sanomaan vs sukupuolen edustajalle vaikkapa oli mukava jutella " tai jopa " kiva takki " tms. Pieniä asioita , millä et voi mitenkään nolata itseäsi , koska nuo asiat voisi sanoa myös kaverille.',
-    'Ihmetyksen aiheenani on se, et kun olen vuosien aikana jutellu täysin terveiden ja supliikisti käyttäytyvien kavereiden kanssa aiheesta seksi, ja näyttää siltä, että ilmeisesti suurinosa näistä supliikki perus miehistä jännittää sitä ja eka kokemus voi	mennä pieleen	liian jännittämisen takia, näin parikin on kertonut.',
-    'Mitkä on teidän mahdollisuudet auttaa emää ja pentuja, jos jotain alkaa	mennä pieleen?',
-    'Itse olen sitä mieltä ettei homma ole sen kaiken arvoista, vaikka onnistuessaan lopputulos on todella komea, se siis voi	mennä pieleen	vaikka teippaisitkin ...',
-  ]
-
-  const [sents, setSents] = useState<string[]>(dummySents) // for Korp search results 
-  
-  function getS24Sents(data: object) {
-    const sent_objects = data.kwic.map(a => a.tokens)
+  function getS24Sents(data: KorpResponse): string[] {
+    const sent_objects = data.kwic.map((a: KorpKwic) => a.tokens)
     const results = sent_objects.map(
-      a => a.map(
-        b => b.word).join(' '))
-      
-    //   a => a.reduce((acc, curr, i) => {
-    //     const punctuation = /^[.,!?;:]$/
-
-    //     if (punctuation.test(word)) {
-    //       return acc + curr.word
-    //     } else {
-    //       return acc + ' ' + curr.word
-    //     }
-    //     }
-    //   )
-    // )
+      (a: KorpToken[]) => a.map((b: KorpToken) => b.word).join(' ')
+    )
     
     console.log(results)
     return results
@@ -47,7 +27,7 @@ function App() {
   async function fetchData(search: string) {
     const response = await fetch(`https://www.kielipankki.fi/korp/cgi-bin/korp/korp.cgi?command=query&defaultcontext=1+sentence&defaultwithin=sentence&show=sentence&start=0&end=5&corpus=S24&cqp="${search}"`)
     if (response.status === 200) {
-      const data = await response.json()
+      const data: KorpResponse = await response.json()
       setSents(getS24Sents(data))
     } else {
       alert('Search string not found')
