@@ -1,5 +1,6 @@
 import './App.css'
-import { useState } from 'react'
+import { useState, type FormEvent } from 'react'
+import Form from './components/Form'
 
 function Sentence({ text }) {
   return(
@@ -19,25 +20,44 @@ function App() {
     'Itse olen sitä mieltä ettei homma ole sen kaiken arvoista, vaikka onnistuessaan lopputulos on todella komea, se siis voi	mennä pieleen	vaikka teippaisitkin ...',
   ]
 
-  const [sents, setSents] = useState<string[]>(dummySents)
+  const [sents, setSents] = useState<string[]>(dummySents) // for Korp search results 
+  
+  function getS24Sents(data: object) {
+    const sent_objects = data.kwic.map(a => a.tokens)
+    const results = sent_objects.map(
+      a => a.map(
+        b => b.word).join(' '))
+      
+    //   a => a.reduce((acc, curr, i) => {
+    //     const punctuation = /^[.,!?;:]$/
+
+    //     if (punctuation.test(word)) {
+    //       return acc + curr.word
+    //     } else {
+    //       return acc + ' ' + curr.word
+    //     }
+    //     }
+    //   )
+    // )
+    
+    console.log(results)
+    return results
+  }
+
+  async function fetchData(search: string) {
+    const response = await fetch(`https://www.kielipankki.fi/korp/cgi-bin/korp/korp.cgi?command=query&defaultcontext=1+sentence&defaultwithin=sentence&show=sentence&start=0&end=5&corpus=S24&cqp="${search}"`)
+    if (response.status === 200) {
+      const data = await response.json()
+      setSents(getS24Sents(data))
+    } else {
+      alert('Search string not found')
+    }
+  }
 
   return (
     <div className='App flex flex-col '>
       <h1 className='text-3xl mt-5 mx-auto'>MiniKorp</h1>
-      <form className='w-1/2 max-w-sm mx-auto'>
-      <div className='flex mt-5'>
-        <input
-        name='username'
-        required
-        className='block flex-1 px-3 py-2 border border-gray-300 form-input rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300'
-        />
-        <button
-        type='submit'
-        className='w-max px-3 py-2 ml-2 text-sm font-medium text-zinc-700 border border-gray-300 rounded-md leading-4     hover:text-zinc-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-zinc-50 active:text-zinc-800'>
-        Etsi lauseita
-        </button>
-        </div>  
-      </form>
+      <Form fetchData={fetchData} />
       <div>
       {sents && sents.length > 0 
         ? sents.map((sent, idx) => 
