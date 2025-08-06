@@ -2,55 +2,10 @@
 import './App.css'
 import { useState } from 'react'
 import Form from './components/Form'
-import type { KorpResponse, KorpToken } from './types'
+import Sentence from './components/Sentence'
+import type { KorpResponse, KorpToken, KwicSummary, ApiParams, KorpKwic } from './types'
 
-type ApiParams = {
-  command: string
-  defaultcontext: string
-  defaultwithin: string
-  show: string
-  start: number
-  end: number
-  corpus: string
-  cqp: string
-}
-
-const formatTokenElements = (tokens: string[]): string[] => {
-  const noSpaceBefore = new Set(['.', ',', '!', '?', ';', ':', ')', ']', '}', '"']);
-  const noSpaceAfter = new Set(['(', '[', '{', '"']);
-
-  const elements: string[] = [];
-
-  tokens.forEach((token, i) => {
-    const prev = i > 0 ? tokens[i - 1] : '';
-    const needsSpaceBefore =
-      i > 0 && !noSpaceBefore.has(token) && !noSpaceAfter.has(prev);
-
-    elements.push(needsSpaceBefore ? ` ${token}` : token);
-;
-  });
-  console.log(elements)
-  return elements;
-};
-
-// Component for displaying a single search result
-type SentenceProps = { tokens: string[], start: number, end: number }
-const Sentence = ({ tokens, start, end }: SentenceProps) => {
-  const elements = formatTokenElements(tokens)
-  const before = elements.slice(0, start);
-  const bold = elements.slice(start, end);
-  const after = elements.slice(end);
-
-  return (
-    <div className='w-4/5 max-w-3xl mt-5 mx-auto px-3 py-2 border rounded-md shadow-sm'>
-      <p className='text-center'>
-        {before.join('')}
-        <strong>{bold.join('')}</strong>
-        {after.join('')}
-      </p>
-    </div>
-  )
-}
+// HELPER FUNCTIONS (in order of use)
 
 // Build search url for the Korp API
 function buildApiUrl(base: string, params: ApiParams): URL {
@@ -61,22 +16,20 @@ function buildApiUrl(base: string, params: ApiParams): URL {
   return url
 }
 
-function App() {
-  const [sents, setSents] = useState<KwicSummary[]>([])
-
-  // Extract array of search result sentences
-  type KwicSummary = { start: number, end: number, tokens: string[] }
-  
+// Extract search result tokens and start/end indexes
   function getS24Sents(data: KorpResponse): KwicSummary[] {
-    const results: KwicSummary[] = data.kwic.map((kwicObj: Record<string, any>) => {
-      const tokens: string[] = kwicObj.tokens.map((token: KorpToken) => token.word)
-      const start: number = kwicObj.match.start
-      const end: number = kwicObj.match.end
+    const results: KwicSummary[] = data.kwic.map((kwicObj: KorpKwic) => {
+      const tokens = kwicObj.tokens.map((token: KorpToken) => token.word)
+      const start = kwicObj.match.start
+      const end = kwicObj.match.end
       return { start, end, tokens }
     })
     console.log(results)
     return results
   }
+
+function App() {
+  const [sents, setSents] = useState<KwicSummary[]>([])
 
   async function fetchData(search: string): Promise<void> {
     // Set corpus base URL
@@ -106,7 +59,6 @@ function App() {
 
     if (response.status === 200) {
       const data: KorpResponse = await response.json()
-      console.log(data) //checking what I get
       setSents(getS24Sents(data))
     } else {
       alert('Search string not found')
