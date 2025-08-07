@@ -1,3 +1,4 @@
+import SentenceBox from "./SentenceBox";
 import type { KwicSummary } from "../types";
 
 // Ensure correct punctuation spacing
@@ -20,18 +21,16 @@ const formatTokenElements = (tokens: string[]): string[] => {
 
 const Sentence = ({ tokens, start, end }: KwicSummary) => {
   const elements = formatTokenElements(tokens)
-  const before = elements.slice(0, start);
-  const bold = elements.slice(start, end);
-  const after = elements.slice(end);
+  const before = elements.slice(0, start)
+  const bold = elements.slice(start, end)
+  const after = elements.slice(end)
 
   return (
-    <div className='w-4/5 max-w-3xl mt-5 mx-auto px-3 py-2 border rounded-md shadow-sm'>
-      <p className='text-center'>
-        {before.join('')}
-        <strong>{bold.join('')}</strong>
-        {after.join('')}
-      </p>
-    </div>
+    <SentenceBox>     
+      {before.join('')}
+      <strong>{bold.join('')}</strong>
+      {after.join('')}
+    </SentenceBox>
   )
 }
 

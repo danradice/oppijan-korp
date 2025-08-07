@@ -3,6 +3,7 @@ import './App.css'
 import { useState } from 'react'
 import Form from './components/Form'
 import Sentence from './components/Sentence'
+import SentenceBox from './components/SentenceBox'
 import type { KorpResponse, KorpToken, KwicSummary, ApiParams, KorpKwic } from './types'
 
 // HELPER FUNCTIONS (in order of use)
@@ -33,7 +34,10 @@ function App() {
 
   async function fetchData(search: string): Promise<void> {
     // Set corpus base URL
-    const corpus = "https://www.kielipankki.fi/korp/cgi-bin/korp/korp.cgi"
+    const korp = "https://www.kielipankki.fi/korp/cgi-bin/korp/korp.cgi"
+
+    // Set search corpus
+    const corpus = "YLENEWS_FI_2021_S"
 
     // Convert search string to valid CQP query
     const CQPsearch = search
@@ -50,12 +54,13 @@ function App() {
       show: 'sentence',
       start: 0,
       end: 5,
-      corpus: 'S24',
+      corpus: corpus,
       cqp: CQPsearch,
     }
-    const apiUrl = buildApiUrl(corpus, searchParams)
+    const apiUrl = buildApiUrl(korp, searchParams)
 
     const response = await fetch(apiUrl)
+    console.log(apiUrl)
 
     if (response.status === 200) {
       const data: KorpResponse = await response.json()
@@ -74,7 +79,7 @@ function App() {
           ? sents.map((sent: KwicSummary, idx: number) => (
               <Sentence key={idx} {...sent} />
             ))
-          : <p>No sentences to display</p>
+          : <SentenceBox>Ei tuloksia</SentenceBox>
         }
       </div>
     </div>
