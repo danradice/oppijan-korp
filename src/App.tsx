@@ -18,16 +18,17 @@ function buildApiUrl(base: string, params: ApiParams): URL {
 }
 
 // Extract search result tokens and start/end indexes
-  function getS24Sents(data: KorpResponse): KwicSummary[] {
-    const results: KwicSummary[] = data.kwic.map((kwicObj: KorpKwic) => {
-      const tokens = kwicObj.tokens.map((token: KorpToken) => token.word)
-      const start = kwicObj.match.start
-      const end = kwicObj.match.end
-      return { start, end, tokens }
-    })
-    console.log(results)
-    return results
-  }
+function getS24Sents(data: KorpResponse): KwicSummary[] {
+  const results: KwicSummary[] = data.kwic.map((kwicObj: KorpKwic) => {
+    const tokens = kwicObj.tokens
+      .map((token: KorpToken) => token.word)
+    const start = kwicObj.match.start
+    const end = kwicObj.match.end
+    return { start, end, tokens }
+  })
+  // set minimum sentence length to 15 tokens
+  return results.filter(summary => summary.tokens.length >= 15)
+}
 
 function App() {
   const [sents, setSents] = useState<KwicSummary[]>([])
@@ -53,18 +54,21 @@ function App() {
       defaultwithin: 'sentence',
       show: 'sentence',
       start: 0,
-      end: 5,
+      end: 29,
       corpus: corpus,
       cqp: CQPsearch,
     }
+    // Build URL
     const apiUrl = buildApiUrl(korp, searchParams)
 
     const response = await fetch(apiUrl)
-    console.log(apiUrl)
 
+    // Extract sentences, sort randomly and assign to setSents state variable
     if (response.status === 200) {
       const data: KorpResponse = await response.json()
-      setSents(getS24Sents(data))
+      console.log(data)
+      const shuffled = getS24Sents(data).sort(() => Math.random() - 0.5)
+      setSents(shuffled)
     } else {
       alert('Search string not found')
     }
@@ -76,7 +80,7 @@ function App() {
       <Form fetchData={fetchData} />
       <div>
         {sents && sents.length > 0
-          ? sents.map((sent: KwicSummary, idx: number) => (
+          ? sents.slice(0,5).map((sent: KwicSummary, idx: number) => (
               <Sentence key={idx} {...sent} />
             ))
           : <SentenceBox>Ei tuloksia</SentenceBox>

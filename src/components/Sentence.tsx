@@ -15,7 +15,6 @@ const formatTokenElements = (tokens: string[]): string[] => {
     elements.push(needsSpaceBefore ? ` ${token}` : token);
 ;
   });
-  console.log(elements)
   return elements;
 };
 
