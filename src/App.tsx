@@ -27,18 +27,18 @@ function getS24Sents(data: KorpResponse): KwicSummary[] {
     return { start, end, tokens }
   })
   // set minimum sentence length to 15 tokens
-  return results.filter(summary => summary.tokens.length >= 15)
+  return results.filter(summary => summary.tokens.length >= 10)
 }
 
 function App() {
   const [sents, setSents] = useState<KwicSummary[]>([])
 
-  async function fetchData(search: string): Promise<void> {
+  async function fetchData(search: string, corp: string): Promise<void> {
     // Set corpus base URL
     const korp = "https://www.kielipankki.fi/korp/cgi-bin/korp/korp.cgi"
 
     // Set search corpus
-    const corpus = "YLENEWS_FI_2021_S"
+    //const corpus = "YLENEWS_FI_2021_S,YLENEWS_FI_2020_S,YLENEWS_FI_2019_S,YLENEWS_FI_2018_S,YLENEWS_FI_2017_S,YLENEWS_FI_2016_S,YLENEWS_FI_2015_S,YLENEWS_FI_2014_S,YLENEWS_FI_2013_S,YLENEWS_FI_2012_S,YLENEWS_FI_2011_S"
 
     // Convert search string to valid CQP query
     const CQPsearch = search
@@ -55,7 +55,7 @@ function App() {
       show: 'sentence',
       start: 0,
       end: 29,
-      corpus: corpus,
+      corpus: corp,
       cqp: CQPsearch,
     }
     // Build URL

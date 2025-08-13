@@ -2,16 +2,25 @@ import { useState } from 'react'
 import { type FormEvent } from 'react'
 
 type Props = {
-  fetchData: (search: string) => void
+  fetchData: (search: string, corp: string) => void
 }
 
 function Form({ fetchData }: Props) {
   const [search, setSearch] = useState('')
+  const [buttonText, setButtonText] = useState('Etsi lauseita')
+  const [isLoading, setIsLoading] = useState(false)
+  const [corpus, setCorpus] = useState('')
+
+  const yleCorpus = 'YLENEWS_FI_2021_S,YLENEWS_FI_2020_S,YLENEWS_FI_2019_S,YLENEWS_FI_2018_S,YLENEWS_FI_2017_S,YLENEWS_FI_2016_S,YLENEWS_FI_2015_S,YLENEWS_FI_2014_S,YLENEWS_FI_2013_S,YLENEWS_FI_2012_S,YLENEWS_FI_2011_S'
+  const s24Corpus = 'S24_2012,S24_2013,S24_2014,S24_2015,S24_2016,S24_2017,S24_2018,S24_2019,S24_2020,S24_2021,S24_2022,S24_2023'
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault()
-    
-    fetchData(search)
+    setButtonText('Etsitään lauseita')
+    setIsLoading(true)
+    await fetchData(search, corpus)
+    setButtonText('Etsi lauseita')
+    setIsLoading(false)
   }
 
   return (
@@ -26,11 +35,36 @@ function Form({ fetchData }: Props) {
         />
         <button
         type='submit'
-        className='w-max px-3 py-2 ml-2 text-sm font-medium text-zinc-700 border border-gray-300 rounded-md leading-4     hover:text-zinc-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-zinc-50 active:text-zinc-800'>
-        Etsi lauseita
+        className='w-max px-3 py-2 ml-2 text-sm font-medium text-zinc-700 border border-gray-300 rounded-md leading-4     hover:text-zinc-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-zinc-50 active:text-zinc-800'
+        disabled={isLoading}>
+        {buttonText}
         </button>
-        </div>  
-      </form>
+      </div>
+      <div className='flex mt-5'>
+        <label className="mr-4 flex items-center">
+          <input
+            type="radio"
+            name="corpus"
+            value="S24"
+            checked={corpus === s24Corpus}
+            onChange={() => setCorpus(s24Corpus)}
+            className="mr-2"
+          />
+          S24
+        </label>
+        <label className="flex items-center">
+          <input
+            type="radio"
+            name="corpus"
+            value="YLE"
+            checked={corpus === yleCorpus}
+            onChange={() => setCorpus(yleCorpus)}
+            className="mr-2"
+          />
+          YLE
+        </label>
+      </div>  
+    </form>
   )
 }
 
