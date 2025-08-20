@@ -33,15 +33,9 @@ function Form({ fetchData }: Props) {
         required
         className='block flex-1 px-3 py-2 border border-gray-300 form-input rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300'
         />
-        <button
-        type='submit'
-        className='w-max px-3 py-2 ml-2 text-sm font-medium text-zinc-700 border border-gray-300 rounded-md leading-4     hover:text-zinc-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-zinc-50 active:text-zinc-800'
-        disabled={isLoading}>
-        {buttonText}
-        </button>
       </div>
-      <div className='flex mt-5'>
-        <label className="mr-4 flex items-center">
+      <div className='flex mt-3 justify-center align-middle'>
+        <label className="mr-4">
           <input
             type="radio"
             name="corpus"
@@ -52,7 +46,7 @@ function Form({ fetchData }: Props) {
           />
           S24
         </label>
-        <label className="flex items-center">
+        <label className="ml-2 mr-auto">
           <input
             type="radio"
             name="corpus"
@@ -63,6 +57,12 @@ function Form({ fetchData }: Props) {
           />
           YLE
         </label>
+        <button
+        type='submit'
+        className='w-max px-3 py-2 ml-auto text-sm font-medium text-zinc-700 border border-gray-300 rounded-md leading-4 hover:text-zinc-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-zinc-50 active:text-zinc-800'
+        disabled={isLoading}>
+        {buttonText}
+        </button>
       </div>  
     </form>
   )
