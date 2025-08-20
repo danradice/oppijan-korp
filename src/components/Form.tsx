@@ -24,7 +24,7 @@ function Form({ fetchData }: Props) {
   }
 
   return (
-    <form className='w-1/2 max-w-sm mx-auto' onSubmit={handleSubmit}>
+    <form className='w-3/4 max-w-sm mx-auto' onSubmit={handleSubmit}>
       <div className='flex mt-5'>
         <input
         name='search'
