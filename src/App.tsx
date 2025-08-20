@@ -1,4 +1,3 @@
-
 import './App.css'
 import { useState } from 'react'
 import Form from './components/Form'
@@ -31,8 +30,11 @@ function getS24Sents(data: KorpResponse): KwicSummary[] {
 }
 
 function App() {
+
+  //State variable for storing retrieved sentences
   const [sents, setSents] = useState<KwicSummary[]>([])
 
+  //Main API function. Retrieves requested search string from Korp API and stores result in 'sents'
   async function fetchData(search: string, corp: string): Promise<void> {
     // Set corpus base URL
     const korp = "https://www.kielipankki.fi/korp/cgi-bin/korp/korp.cgi"
@@ -43,9 +45,12 @@ function App() {
     // Convert search string to valid CQP query
     const CQPsearch = search
       .trim()
+      .replace(/^(\w)/, (match) => `(${match.toLowerCase()}|${match.toUpperCase()})`) //makes first word case neutral
       .split(/\s+/)
-      .map(word => `[word = "${word}"]`)
+      .map(word => `[word = "${word}"]`) //required form for CQP query
       .join(' ')
+
+    console.log(CQPsearch)
 
     // Build params object
     const searchParams: ApiParams = {
