@@ -33,6 +33,7 @@ function App() {
 
   //State variable for storing retrieved sentences
   const [sents, setSents] = useState<KwicSummary[]>([])
+  const [page, setPage] = useState(1)
 
   //Main API function. Retrieves requested search string from Korp API and stores result in 'sents'
   async function fetchData(search: string, corp: string): Promise<void> {
@@ -59,7 +60,9 @@ function App() {
       defaultwithin: 'sentence',
       show: 'sentence',
       start: 0,
-      end: 29,
+      end: 100,
+      cut: 20,
+      sort: 'random',
       corpus: corp,
       cqp: CQPsearch,
     }
@@ -72,8 +75,8 @@ function App() {
     if (response.status === 200) {
       const data: KorpResponse = await response.json()
       console.log(data)
-      const shuffled = getS24Sents(data).sort(() => Math.random() - 0.5)
-      setSents(shuffled)
+      const extracted = getS24Sents(data)
+      setSents(extracted)
     } else {
       alert('Search string not found')
     }
@@ -82,10 +85,10 @@ function App() {
   return (
     <div className='App flex flex-col '>
       <h1 className='text-3xl mt-5 mx-auto'>MiniKorp</h1>
-      <Form fetchData={fetchData} />
+      <Form fetchData={fetchData} setPage={setPage} />
       <div>
         {sents && sents.length > 0
-          ? sents.slice(0,5).map((sent: KwicSummary, idx: number) => (
+          ? sents.slice(page*5,(page*5)+5).map((sent: KwicSummary, idx: number) => (
               <Sentence key={idx} {...sent} />
             ))
           : <SentenceBox>Ei tuloksia</SentenceBox>

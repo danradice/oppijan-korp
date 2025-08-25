@@ -1,26 +1,35 @@
 import { useState } from 'react'
 import { type FormEvent } from 'react'
+import type { FormProps } from '../types'
 
-type Props = {
-  fetchData: (search: string, corp: string) => void
-}
-
-function Form({ fetchData }: Props) {
-  const [search, setSearch] = useState('')
-  const [buttonText, setButtonText] = useState('Etsi lauseita')
-  const [isLoading, setIsLoading] = useState(false)
-  const [corpus, setCorpus] = useState('')
+function Form({ fetchData, setPage }: FormProps) {
 
   const yleCorpus = 'YLENEWS_FI_2021_S,YLENEWS_FI_2020_S,YLENEWS_FI_2019_S,YLENEWS_FI_2018_S,YLENEWS_FI_2017_S,YLENEWS_FI_2016_S,YLENEWS_FI_2015_S,YLENEWS_FI_2014_S,YLENEWS_FI_2013_S,YLENEWS_FI_2012_S,YLENEWS_FI_2011_S'
-  const s24Corpus = 'S24_2012,S24_2013,S24_2014,S24_2015,S24_2016,S24_2017,S24_2018,S24_2019,S24_2020,S24_2021,S24_2022,S24_2023'
+  const s24Corpus = 'S24_2017,S24_2018,S24_2019,S24_2020,S24_2021,S24_2022,S24_2023'
+  
+  const [search, setSearch] = useState('')
+  const [prevSearch, setPrevSearch] = useState('empty') // to prevent "Lisää esimerkkejä appearing on initial load"
+  const [buttonText, setButtonText] = useState('Etsi lauseita')
+  const [isLoading, setIsLoading] = useState(false)
+  const [corpus, setCorpus] = useState(s24Corpus)
+  const [sameCorpus, setSameCorpus] = useState(false)
+  
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault()
-    setButtonText('Etsitään lauseita')
-    setIsLoading(true)
-    await fetchData(search, corpus)
-    setButtonText('Etsi lauseita')
-    setIsLoading(false)
+    if (prevSearch === search && sameCorpus) {
+      setPage((prev: number) => prev + 1)
+    } else {
+      setPrevSearch(search)
+      setSameCorpus(true)
+      setButtonText('Etsitään lauseita')
+      setIsLoading(true)
+      await fetchData(search, corpus)
+      setButtonText('Etsi lauseita')
+      setIsLoading(false)
+      setPage(1)
+    }
+    
   }
 
   return (
@@ -39,29 +48,35 @@ function Form({ fetchData }: Props) {
           <input
             type="radio"
             name="corpus"
-            value="S24"
-            checked={corpus === s24Corpus}
-            onChange={() => setCorpus(s24Corpus)}
+            value="YLE"
+            checked={corpus === yleCorpus}
+            onChange={() => {
+              setCorpus(yleCorpus)
+              setSameCorpus(false)
+            }}
             className="mr-2"
           />
-          S24
+          YLE
         </label>
         <label className="ml-2 mr-auto">
           <input
             type="radio"
             name="corpus"
-            value="YLE"
-            checked={corpus === yleCorpus}
-            onChange={() => setCorpus(yleCorpus)}
+            value="S24"
+            checked={corpus === s24Corpus}
+            onChange={() => {
+              setCorpus(s24Corpus)
+              setSameCorpus(false)
+            }}
             className="mr-2"
           />
-          YLE
+          S24
         </label>
         <button
         type='submit'
         className='w-max px-3 py-2 ml-auto text-sm font-medium text-zinc-700 border border-gray-300 rounded-md leading-4 hover:text-zinc-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-zinc-50 active:text-zinc-800'
         disabled={isLoading}>
-        {buttonText}
+        {(search === prevSearch) && sameCorpus && !isLoading ? 'Lisää esimerkkejä' : buttonText}
         </button>
       </div>  
     </form>

@@ -5,14 +5,21 @@ export interface ApiParams {
   show: string
   start: number
   end: number
+  cut: number
+  sort: string
   corpus: string
   cqp: string
 }
 
+export interface FormProps {
+  fetchData: (search: string, corp: string) => Promise<void>
+  setPage: React.Dispatch<React.SetStateAction<number>>
+}
+
 export interface KwicSummary {
-    start: number,
-    end: number,
-    tokens: string[]
+  start: number,
+  end: number,
+  tokens: string[]
 }
 
 export interface KorpToken {
