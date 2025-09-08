@@ -33,59 +33,63 @@ function App() {
 
   //State variable for storing retrieved sentences
   const [sents, setSents] = useState<KwicSummary[]>([])
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(0)
 
   //Main API function. Retrieves requested search string from Korp API and stores result in 'sents'
   async function fetchData(search: string, corp: string): Promise<void> {
-    // Set corpus base URL
     const korp = "https://www.kielipankki.fi/korp/cgi-bin/korp/korp.cgi"
 
-    // Set search corpus
-    //const corpus = "YLENEWS_FI_2021_S,YLENEWS_FI_2020_S,YLENEWS_FI_2019_S,YLENEWS_FI_2018_S,YLENEWS_FI_2017_S,YLENEWS_FI_2016_S,YLENEWS_FI_2015_S,YLENEWS_FI_2014_S,YLENEWS_FI_2013_S,YLENEWS_FI_2012_S,YLENEWS_FI_2011_S"
+    // Split corp string into array if it's comma-separated
+    const corpora = corp.split(',').map(c => c.trim()).filter(Boolean)
+    console.log(corpora)
 
     // Convert search string to valid CQP query
     const CQPsearch = search
       .trim()
-      .replace(/^(\w)/, (match) => `(${match.toLowerCase()}|${match.toUpperCase()})`) //makes first word case neutral
+      .replace(/^(\w)/, (match) => `(${match.toLowerCase()}|${match.toUpperCase()})`)
       .split(/\s+/)
-      .map(word => `[word = "${word}"]`) //required form for CQP query
+      .map(word => `[word = "${word}"]`)
       .join(' ')
 
-    console.log(CQPsearch)
+    setSents([]) // Clear previous results
 
-    // Build params object
-    const searchParams: ApiParams = {
-      command: 'query',
-      defaultcontext: '1 sentence',
-      defaultwithin: 'sentence',
-      show: 'sentence',
-      start: 0,
-      end: 100,
-      cut: 20,
-      sort: 'random',
-      corpus: corp,
-      cqp: CQPsearch,
-    }
-    // Build URL
-    const apiUrl = buildApiUrl(korp, searchParams)
+    for (const corpusName of corpora) {
+      const searchParams: ApiParams = {
+        command: 'query',
+        defaultcontext: '1 sentence',
+        defaultwithin: 'sentence',
+        show: 'sentence',
+        start: 0,
+        end: 100,
+        cut: 20,
+        sort: 'random',
+        corpus: corpusName,
+        cqp: CQPsearch,
+      }
+      const apiUrl = buildApiUrl(korp, searchParams)
 
-    const response = await fetch(apiUrl)
-
-    // Extract sentences, sort randomly and assign to setSents state variable
-    if (response.status === 200) {
-      const data: KorpResponse = await response.json()
-      console.log(data)
-      const extracted = getS24Sents(data)
-      setSents(extracted)
-    } else {
-      alert('Search string not found')
+      try {
+        const response = await fetch(apiUrl)
+        if (response.status === 200) {
+          const data: KorpResponse = await response.json()
+          const extracted = getS24Sents(data)
+          console.log(extracted)
+          setSents(prev => [...prev, ...extracted])
+        } else {
+          // Optionally handle errors per corpus
+          alert(`Search string not found in ${corpusName}`)
+        }
+      } catch (err) {
+        // Optionally handle fetch errors
+        console.error(`Error fetching from ${corpusName}:`, err)
+      }
     }
   }
 
   return (
     <div className='App flex flex-col '>
       <h1 className='text-3xl mt-5 mx-auto'>MiniKorp</h1>
-      <Form fetchData={fetchData} setPage={setPage} />
+      <Form fetchData={fetchData} setPage={setPage} page={page} sents={sents} />
       <div>
         {sents && sents.length > 0
           ? sents.slice(page*5,(page*5)+5).map((sent: KwicSummary, idx: number) => (

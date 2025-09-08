@@ -14,6 +14,8 @@ export interface ApiParams {
 export interface FormProps {
   fetchData: (search: string, corp: string) => Promise<void>
   setPage: React.Dispatch<React.SetStateAction<number>>
+  page: number
+  sents: KwicSummary[]
 }
 
 export interface KwicSummary {

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { type FormEvent } from 'react'
 import type { FormProps } from '../types'
 
-function Form({ fetchData, setPage }: FormProps) {
+function Form({ fetchData, setPage, page, sents }: FormProps) {
 
   const yleCorpus = 'YLENEWS_FI_2021_S,YLENEWS_FI_2020_S,YLENEWS_FI_2019_S,YLENEWS_FI_2018_S,YLENEWS_FI_2017_S,YLENEWS_FI_2016_S,YLENEWS_FI_2015_S,YLENEWS_FI_2014_S,YLENEWS_FI_2013_S,YLENEWS_FI_2012_S,YLENEWS_FI_2011_S'
   const s24Corpus = 'S24_2017,S24_2018,S24_2019,S24_2020,S24_2021,S24_2022,S24_2023'
@@ -18,7 +18,7 @@ function Form({ fetchData, setPage }: FormProps) {
   async function handleSubmit(event: FormEvent) {
     event.preventDefault()
     if (prevSearch === search && sameCorpus) {
-      setPage((prev: number) => prev + 1)
+      setPage((prev: number) => (prev*5)+5 < sents.length ? prev + 1 : 0)
     } else {
       setPrevSearch(search)
       setSameCorpus(true)
@@ -76,7 +76,11 @@ function Form({ fetchData, setPage }: FormProps) {
         type='submit'
         className='w-max px-3 py-2 ml-auto text-sm font-medium text-zinc-700 border border-gray-300 rounded-md leading-4 hover:text-zinc-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-zinc-50 active:text-zinc-800'
         disabled={isLoading}>
-        {(search === prevSearch) && sameCorpus && !isLoading ? 'Lisää esimerkkejä' : buttonText}
+        {(search === prevSearch) && sameCorpus && !isLoading && sents.length > 5
+          ? (page*5)+5 < sents.length
+            ? 'Lisää esimerkkejä'
+            : 'Palaa ensimmäisiin'
+          : buttonText}
         </button>
       </div>  
     </form>
