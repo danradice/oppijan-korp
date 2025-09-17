@@ -14,11 +14,12 @@ function Form({ fetchData, setPage, page, sents }: FormProps) {
   const [corpus, setCorpus] = useState(s24Corpus)
   const [sameCorpus, setSameCorpus] = useState(false)
   
-
   async function handleSubmit(event: FormEvent) {
     event.preventDefault()
+    // If search string and corpus have not changed then show next page
     if (prevSearch === search && sameCorpus) {
       setPage((prev: number) => (prev*5)+5 < sents.length ? prev + 1 : 0)
+    // Otherwise run a new search
     } else {
       setPrevSearch(search)
       setSameCorpus(true)
@@ -27,9 +28,8 @@ function Form({ fetchData, setPage, page, sents }: FormProps) {
       await fetchData(search, corpus)
       setButtonText('Etsi lauseita')
       setIsLoading(false)
-      setPage(1)
+      setPage(0)
     }
-    
   }
 
   return (
