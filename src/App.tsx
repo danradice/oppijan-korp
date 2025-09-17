@@ -25,7 +25,7 @@ function getS24Sents(data: KorpResponse): KwicSummary[] {
     const end = kwicObj.match.end
     return { start, end, tokens }
   })
-  // set minimum sentence length to 15 tokens
+  // set minimum sentence length to 10 tokens
   return results.filter(summary => summary.tokens.length >= 10)
 }
 
@@ -44,12 +44,32 @@ function App() {
     console.log(corpora)
 
     // Convert search string to valid CQP query
-    const CQPsearch = search
+    let CQPsearch
+    // allow raw CQP searches
+    if (search[0] === "[") {
+      CQPsearch = search
+    } else {
+      CQPsearch = search
       .trim()
-      .replace(/^(\w)/, (match) => `(${match.toLowerCase()}|${match.toUpperCase()})`)
+      .replace(/^\p{L}/u, (match) => `(${match.toLowerCase()}|${match.toUpperCase()})`)
       .split(/\s+/)
-      .map(word => `[word = "${word}"]`)
+      .map(word => {
+        // ...{num} shorthand for multiple words between
+        const wordsBetween = word.match(/^\.\.\.(\d+)$/)
+        // ={word} shorthand for lemma search
+        const lemmaSearch = word.match(/^=(\p{L}+)/u)
+        if (wordsBetween) {
+          return `[]{0,${wordsBetween[1]}}`
+        } else if (lemmaSearch) {
+          return `[lemma = "${lemmaSearch[1]}"]`
+        } else {
+          return `[word = "${word}"]`
+        }
+      })
       .join(' ')
+    }
+    
+    console.log(CQPsearch)
 
     setSents([]) // Clear previous results
 
