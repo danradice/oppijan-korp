@@ -3,6 +3,7 @@ import { useState } from 'react'
 import Form from './components/Form'
 import Sentence from './components/Sentence'
 import SentenceBox from './components/SentenceBox'
+import InstructionBox from './components/InstructionBox'
 import type { KorpResponse, KorpToken, KwicSummary, ApiParams, KorpKwic } from './types'
 
 // HELPER FUNCTIONS (in order of use)
@@ -34,10 +35,15 @@ function App() {
   //State variable for storing retrieved sentences
   const [sents, setSents] = useState<KwicSummary[]>([])
   const [page, setPage] = useState(0)
+  // Show instructions on initial load
+  const [showInstructions, setShowInstructions] = useState(true)
 
   //Main API function. Retrieves requested search string from Korp API and stores result in 'sents'
   async function fetchData(search: string, corp: string): Promise<void> {
     const korp = "https://www.kielipankki.fi/korp/cgi-bin/korp/korp.cgi"
+
+    // Hide instructions on first search
+    setShowInstructions(false)
 
     // Split corp string into array if it's comma-separated
     const corpora = corp.split(',').map(c => c.trim()).filter(Boolean)
@@ -108,15 +114,18 @@ function App() {
 
   return (
     <div className='App flex flex-col '>
-      <h1 className='text-3xl mt-5 mx-auto'>MiniKorp</h1>
+      <h1 className='text-3xl mt-5 mx-auto'>Oppijan Korp</h1>
       <Form fetchData={fetchData} setPage={setPage} page={page} sents={sents} />
       <div>
-        {sents && sents.length > 0
-          ? sents.slice(page*5,(page*5)+5).map((sent: KwicSummary, idx: number) => (
-              <Sentence key={idx} {...sent} />
-            ))
-          : <SentenceBox>Ei tuloksia</SentenceBox>
-        }
+        {showInstructions ? (
+            <InstructionBox></InstructionBox>
+        ) : (
+          sents && sents.length > 0
+            ? sents.slice(page*5,(page*5)+5).map((sent: KwicSummary, idx: number) => (
+                <Sentence key={idx} {...sent} />
+              ))
+            : <SentenceBox>Ei tuloksia</SentenceBox>
+        )}
       </div>
     </div>
   )

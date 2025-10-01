@@ -9,9 +9,9 @@ function Form({ fetchData, setPage, page, sents }: FormProps) {
   
   const [search, setSearch] = useState('')
   const [prevSearch, setPrevSearch] = useState('empty') // to prevent "Lisää esimerkkejä appearing on initial load"
-  const [buttonText, setButtonText] = useState('Etsi lauseita')
+  const [buttonText, setButtonText] = useState('Etsi')
   const [isLoading, setIsLoading] = useState(false)
-  const [corpus, setCorpus] = useState(s24Corpus)
+  const [corpus, setCorpus] = useState(yleCorpus)
   const [sameCorpus, setSameCorpus] = useState(false)
   
   async function handleSubmit(event: FormEvent) {
@@ -23,10 +23,10 @@ function Form({ fetchData, setPage, page, sents }: FormProps) {
     } else {
       setPrevSearch(search)
       setSameCorpus(true)
-      setButtonText('Etsitään lauseita')
+      setButtonText('Etsitään')
       setIsLoading(true)
       await fetchData(search, corpus)
-      setButtonText('Etsi lauseita')
+      setButtonText('Etsi')
       setIsLoading(false)
       setPage(0)
     }
@@ -56,7 +56,7 @@ function Form({ fetchData, setPage, page, sents }: FormProps) {
             }}
             className="mr-2"
           />
-          YLE
+          Uutiset
         </label>
         <label className="ml-2 mr-auto">
           <input
@@ -70,7 +70,7 @@ function Form({ fetchData, setPage, page, sents }: FormProps) {
             }}
             className="mr-2"
           />
-          S24
+          Puhekieli
         </label>
         <button
         type='submit'
@@ -78,8 +78,8 @@ function Form({ fetchData, setPage, page, sents }: FormProps) {
         disabled={isLoading}>
         {(search === prevSearch) && sameCorpus && !isLoading && sents.length > 5
           ? (page*5)+5 < sents.length
-            ? 'Lisää esimerkkejä'
-            : 'Palaa ensimmäisiin'
+            ? 'Lisää'
+            : 'Palaa alkuun'
           : buttonText}
         </button>
       </div>  
