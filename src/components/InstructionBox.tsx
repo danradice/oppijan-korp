@@ -4,18 +4,18 @@ const InstructionBox = () => (
     <p className='text-center'><b>Tervetuloa Oppijan Korpiin!</b></p>
     <p>&nbsp;</p>
     <p>
-      Täältä saa esimerkkilauseita nopeasti ja monipuolisesti <a
+      Oppijan Korpin avulla voit poimia esimerkkilauseita nopeasti ja monipuolisesti <a
           href="https://korp.csc.fi/"
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-600 underline"
         >
-          Korp-pavelun
+          Korp-palvelun
       </a> avoimista korpuksista
     </p>
     <p>Valitsemalla <b>"Uutiset"</b> saat lauseita YLE Uutisista</p>
     <p>Valitsemalla <b>"Puhekieli"</b> saat lauseita Suomi24 keskustelupalstasta</p>
-    <p>(<b>HUOM</b>: keskustelupalstat eivät ole tarkasti moderoituja – niistä tulee kaikenlaista)</p>
+    <p>(<b>HUOM</b>: keskustelupalstat eivät ole tarkasti moderoituja, joten hakutulosten joukossa voi tulee kaikenlaista)</p>
     <p>&nbsp;</p>
     <p>Tietyn sanan tai fraasin hakemisen lisäksi voit:</p>
     <ul className="list-disc pl-6">
