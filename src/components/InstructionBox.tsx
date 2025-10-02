@@ -4,14 +4,14 @@ const InstructionBox = () => (
     <p className='text-center'><b>Tervetuloa Oppijan Korpiin!</b></p>
     <p>&nbsp;</p>
     <p>
-      Oppijan Korpin avulla voit poimia esimerkkilauseita nopeasti ja monipuolisesti <a
+      Oppijan Korpin avulla voit poimia lauseita nopeasti ja monipuolisesti <a
           href="https://korp.csc.fi/"
           target="_blank"
           rel="noopener noreferrer"
           className="text-blue-600 underline"
         >
           Korp-palvelun
-      </a> avoimista korpuksista
+      </a> korpuksista
     </p>
     <p>Valitsemalla <b>"Uutiset"</b> saat lauseita YLE Uutisista</p>
     <p>Valitsemalla <b>"Puhekieli"</b> saat lauseita Suomi24 keskustelupalstasta</p>
