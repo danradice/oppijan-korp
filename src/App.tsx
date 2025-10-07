@@ -18,7 +18,7 @@ function buildApiUrl(base: string, params: ApiParams): URL {
 }
 
 // Extract search result tokens and start/end indexes
-function getS24Sents(data: KorpResponse): KwicSummary[] {
+function extractSents(data: KorpResponse): KwicSummary[] {
   const results: KwicSummary[] = data.kwic.map((kwicObj: KorpKwic) => {
     const tokens = kwicObj.tokens
       .map((token: KorpToken) => token.word)
@@ -35,6 +35,7 @@ function App() {
   //State variable for storing retrieved sentences
   const [sents, setSents] = useState<KwicSummary[]>([])
   const [page, setPage] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
   // Show instructions on initial load
   const [showInstructions, setShowInstructions] = useState(true)
 
@@ -98,7 +99,7 @@ function App() {
         const response = await fetch(apiUrl)
         if (response.status === 200) {
           const data: KorpResponse = await response.json()
-          const extracted = getS24Sents(data)
+          const extracted = extractSents(data)
           console.log(extracted)
           setSents(prev => [...prev, ...extracted])
         } else {
@@ -115,17 +116,18 @@ function App() {
   return (
     <div className='App flex flex-col '>
       <h1 className='text-3xl mt-5 mx-auto'>Oppijan Korp</h1>
-      <Form fetchData={fetchData} setPage={setPage} page={page} sents={sents} />
+      <Form fetchData={fetchData} page={page} setPage={setPage} isLoading={isLoading} setIsLoading={setIsLoading} sents={sents} />
       <div>
-        {showInstructions ? (
-            <InstructionBox></InstructionBox>
-        ) : (
-          sents && sents.length > 0
+        {showInstructions 
+          ? <InstructionBox></InstructionBox>
+          : sents && sents.length > 0
             ? sents.slice(page*5,(page*5)+5).map((sent: KwicSummary, idx: number) => (
-                <Sentence key={idx} {...sent} />
-              ))
-            : <SentenceBox>Ei tuloksia</SentenceBox>
-        )}
+              <Sentence key={idx} {...sent} />
+            ))
+            : isLoading 
+              ? <SentenceBox>Haetaan lauseita</SentenceBox>
+              : <SentenceBox>Ei tuloksia</SentenceBox>
+        }
       </div>
     </div>
   )

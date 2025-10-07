@@ -16,6 +16,8 @@ export interface FormProps {
   setPage: React.Dispatch<React.SetStateAction<number>>
   page: number
   sents: KwicSummary[]
+  isLoading: boolean
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export interface KwicSummary {

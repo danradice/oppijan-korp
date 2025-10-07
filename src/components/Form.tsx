@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { type FormEvent } from 'react'
 import type { FormProps } from '../types'
 
-function Form({ fetchData, setPage, page, sents }: FormProps) {
+function Form({ fetchData, page, setPage, isLoading, setIsLoading, sents }: FormProps) {
 
   const yleCorpus = 'YLENEWS_FI_2021_S,YLENEWS_FI_2020_S,YLENEWS_FI_2019_S,YLENEWS_FI_2018_S,YLENEWS_FI_2017_S,YLENEWS_FI_2016_S,YLENEWS_FI_2015_S,YLENEWS_FI_2014_S,YLENEWS_FI_2013_S,YLENEWS_FI_2012_S,YLENEWS_FI_2011_S'
   const s24Corpus = 'S24_2017,S24_2018,S24_2019,S24_2020,S24_2021,S24_2022,S24_2023'
@@ -10,7 +10,6 @@ function Form({ fetchData, setPage, page, sents }: FormProps) {
   const [search, setSearch] = useState('')
   const [prevSearch, setPrevSearch] = useState('empty') // to prevent "Lisää esimerkkejä appearing on initial load"
   const [buttonText, setButtonText] = useState('Etsi')
-  const [isLoading, setIsLoading] = useState(false)
   const [corpus, setCorpus] = useState(yleCorpus)
   const [sameCorpus, setSameCorpus] = useState(false)
   
