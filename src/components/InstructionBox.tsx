@@ -11,11 +11,11 @@ const InstructionBox = () => (
           className="text-blue-600 underline"
         >
           Korp-palvelun
-      </a> korpuksista
+      </a> korpuksista.
     </p>
-    <p>Valitsemalla <b>"Uutiset"</b> saat lauseita YLE Uutisista</p>
-    <p>Valitsemalla <b>"Puhekieli"</b> saat lauseita Suomi24 keskustelupalstasta</p>
-    <p>(<b>HUOM</b>: keskustelupalstat eivät ole tarkasti moderoituja, joten hakutulosten joukossa voi tulee kaikenlaista)</p>
+    <p>Valitsemalla <b>"Uutiset"</b> saat lauseita YLE Uutisista.</p>
+    <p>Valitsemalla <b>"Puhekieli"</b> saat lauseita Suomi24 keskustelupalstasta.</p>
+    <p>(<b>HUOM</b>: keskustelupalstat eivät ole tarkasti moderoituja, joten hakutulosten joukossa voi tulee kaikenlaista.)</p>
     <p>&nbsp;</p>
     <p>Tietyn sanan tai fraasin hakemisen lisäksi voit:</p>
     <ul className="list-disc pl-6">
