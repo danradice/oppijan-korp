@@ -11,6 +11,12 @@ export interface ApiParams {
   cqp: string
 }
 
+export interface Settings {
+  minLength: number;
+  maxSents: number;
+  sentsPerPage: number;
+}
+
 export interface FormProps {
   fetchData: (search: string, corp: string) => Promise<void>
   setPage: React.Dispatch<React.SetStateAction<number>>
@@ -18,6 +24,8 @@ export interface FormProps {
   sents: KwicSummary[]
   isLoading: boolean
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+  settings: Settings
+  setSettings: React.Dispatch<React.SetStateAction<Settings>>
 }
 
 export interface KwicSummary {
