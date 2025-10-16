@@ -18,14 +18,18 @@ export interface Settings {
 }
 
 export interface FormProps {
-  fetchData: (search: string, corp: string) => Promise<void>
-  setPage: React.Dispatch<React.SetStateAction<number>>
-  page: number
-  sents: KwicSummary[]
-  isLoading: boolean
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
-  settings: Settings
-  setSettings: React.Dispatch<React.SetStateAction<Settings>>
+  fetchData: (search: string, corp: string) => Promise<void>;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  page: number;
+  sents: KwicSummary[];
+  isLoading: boolean;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  settings: Settings;
+  setSettings: React.Dispatch<React.SetStateAction<Settings>>;
+  corpus: string;
+  setCorpus: React.Dispatch<React.SetStateAction<string>>;
+  yleCorpus: string;
+  s24Corpus: string;
 }
 
 export interface KwicSummary {

@@ -6,6 +6,7 @@ import SentenceBox from './components/SentenceBox'
 import InstructionBox from './components/InstructionBox'
 import type { KorpResponse, KorpToken, KwicSummary, ApiParams, KorpKwic, Settings } from './types'
 import StatsBox from './components/StatsBox'
+import SettingsModal from './components/SettingsModal'
 
 // HELPER FUNCTIONS (in order of use)
 
@@ -49,6 +50,7 @@ function App() {
     maxSents: 20,
     sentsPerPage: 5,
   })
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false)
 
   //Main API function. Retrieves requested search string from Korp API and stores result in 'sents'
   async function fetchData(search: string, corp: string): Promise<void> {
@@ -85,11 +87,11 @@ function App() {
         // ...{num} shorthand for multiple words between
         const wordsBetween = word.match(/^\.\.\.(\d+)$/)
         // ={word} shorthand for lemma search
-        const lemmaSearch = word.match(/^=(\p{L}+)/u)
+        const lemmaSearch = word.match(/^-(\p{L}+)/u)
         // -{pos} shorthand for part of speech search
-        const posSearch = word.match(/^-(\p{L}+)/u)
+        const posSearch = word.match(/^!(\p{L}+)/u)
         // #{case} shorthand for case search
-        const caseSearch = word.match(/^#(\p{L}+)/u)
+        const caseSearch = word.match(/^'(\p{L}+)/u)
 
         if (wordsBetween) {
           return `[]{0,${wordsBetween[1]}}`
@@ -153,7 +155,26 @@ function App() {
 
   return (
     <div className='App flex flex-col '>
-      <h1 className='text-3xl mt-5 mx-auto'>Oppijan Korp</h1>
+      <div className="relative flex items-center justify-center mt-5 mb-2">
+        <h1 className='text-3xl mx-auto'>Oppijan Korp</h1>
+        <button
+          type="button"
+          className="absolute right-4 top-1/2 -translate-y-1/2 bg-gray-200 hover:bg-gray-300 text-xl rounded-full w-9 h-9 flex items-center justify-center shadow"
+          aria-label="Asetukset"
+          onClick={() => setIsSettingsOpen(true)}
+        >
+          ?
+        </button>
+      </div>
+      <SettingsModal
+        isOpen={isSettingsOpen}
+        initialSettings={settings}
+        onSave={(newSettings) => {
+          setSettings(newSettings);
+          setIsSettingsOpen(false);
+        }}
+        onClose={() => setIsSettingsOpen(false)}
+      />
       <Form
         fetchData={fetchData}
         page={page}
