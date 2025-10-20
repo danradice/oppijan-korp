@@ -23,14 +23,14 @@ const InstructionsModal = ({ isOpen, onClose }) => {
           <p>Oppijan Korpin lausehauissa voi käyttää säännöllisiä lausekkeita sekä etsiä lemman, sijan tai sanamuodon mukaan. Alla löydät lisäohjeita näiden toimintojen käyttöön.</p>
           <p>&nbsp;</p>
           <p><strong>Säännölliset lausekkeet eli Regular expressions / regex</strong></p>
-          <p>Regex on tietynlainen &quot;kaavakieli&quot;, jolla voit etsiä sanoja tai fraaseja, jotka täyttävät tietyt ehdot. Jos haluaisit syventyä regexin käyttöön, hyvä johdanto teemaan löytyy sivulta regexone.com. Alla on pari esimerkkiä regex-lausekkeista, joista on erityisesti hyötyä Oppijan Korpissa:</p>
+            <p>Regex on tietynlainen &quot;kaavakieli&quot;, jolla voit etsiä sanoja tai fraaseja, jotka täyttävät tietyt ehdot. Jos haluaisit syventyä regexin käyttöön, hyvä johdanto teemaan löytyy sivulta <a href="https://regexone.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">regexone.com</a>. Alla on pari esimerkkiä regex-lausekkeista, joista on erityisesti hyötyä Oppijan Korpissa:</p>
           <p>&nbsp;</p>
           <ul className="list-disc pl-6">
             <li>
-              <p>Yhdistelmällä <b>.+</b> voit esim etsiä yhdyssanoja, jotka alkavat tai loppuvat tietyllä sanalla. <b>.+puoli</b> löytää yhdyssanoja, jotka loppuvat sanalla &quot;puoli&quot;, ja <b>mega.+</b> löytää yhdyssanoja, jotka alkavat sanalla &quot;mega&quot;</p>
+              <p>Yhdistelmällä <b>.+</b> voit esim. etsiä yhdyssanoja, jotka alkavat tai loppuvat tietyllä sanalla. <b>.+puoli</b> löytää yhdyssanoja, jotka loppuvat sanalla &quot;puoli&quot;, ja <b>mega.+</b> löytää yhdyssanoja, jotka alkavat sanalla &quot;mega&quot;</p>
             </li>
             <li>
-              <p>Haku <b>leikepöy(tään|dälle)</b> löytää lauseita, joissa esiintyy liekepöytä-sanan illatiivi tai allatiivi. |-merkki tarkoittaa &quot;tai&quot; ja kaksi eri vaihtoehtoa laitetaan sulkuihin. Lopputulos tarkoittaa siis &quot;leikepöy + joko tään tai dälle&quot;</p>
+              <p>Haku <b>leikepöy(tään|dälle)</b> löytää lauseita, joissa esiintyy leikepöytä-sanan illatiivi tai allatiivi. |-merkki tarkoittaa &quot;tai&quot; ja kaksi eri vaihtoehtoa laitetaan sulkuihin. Lopputulos tarkoittaa siis &quot;leikepöy + joko tään tai dälle&quot;</p>
             </li>
           </ul>
           <p>&nbsp;</p>
@@ -38,7 +38,7 @@ const InstructionsModal = ({ isOpen, onClose }) => {
           <p>Lisäämällä yhdysmerkki hakusanan alkuun voit hakea lauseita, joissa esiintyy mikä tahansa sanan eri sija- tai taivutusmuodoista. -kieli löytää siis kielen, kieltä, kieleen jne. -mennä löytää puolestaan menen, menin, mentiin jne.</p>
           <p>&nbsp;</p>
           <p><strong>Sija-hakuoperaattori (&#39;)</strong></p>
-          <p>Lisäämällä puolilainausmerkki + lyhenne voit etsiä sijan mukaan. Kullekin sijalle on oma kolmen kirjaimen lyhenne, joka löytyy alla olevasta taulukosta</p>
+          <p>Lisäämällä puolilainausmerkki + lyhenne (esim. 'Nom) voit etsiä sijan mukaan. Kullekin sijalle on oma kolmen kirjaimen lyhenne, joka löytyy alla olevasta taulukosta</p>
           <p>&nbsp;</p>
           <table className="border-collapse border border-gray-300">
             <thead>
@@ -112,7 +112,7 @@ const InstructionsModal = ({ isOpen, onClose }) => {
           </table>
           <p>&nbsp;</p>
           <p><strong>Sanamuoto-hakuoperaattori (!)</strong></p>
-          <p>Lisäämällä huudahdusmerkki + lyhenne voit etsiä sanamuodon mukaan. Alla olevassa taulukossa on eri sanamuotojen lyhenteet.</p>
+          <p>Lisäämällä huutomerkki + lyhenne (esim. !V) voit etsiä sanamuodon mukaan. Alla olevassa taulukossa on eri sanamuotojen lyhenteet.</p>
           <p>&nbsp;</p>
           <table className="border-collapse border border-gray-300">
             <thead>

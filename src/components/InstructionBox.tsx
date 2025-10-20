@@ -33,8 +33,10 @@ const InstructionBox = () => (
       </li>
       <li>etsiä <b>perusmuodon</b> mukaan lisäämällä <b>yhdysmerkki</b> (-) sanan alkuun. Haulla <b><i>-tehdä hyvää</i></b> saat siis mukaan kaikki tehdä-verbin eri muodot (tekee, teki, tehty jne.).</li>
       <li>etsiä <b>sijan</b> mukaan lisäämällä <b>puolilainausmerkki</b> (') plus sijamuodon lyhenne. Haulla <b><i>raskastaa 'Acc</i></b> löydät siis tapauksia, joissa rakastaa-verbia ei seuraa partatiivi! </li>
-      <li>etsiä <b>sanamuodon</b> mukaan lisäämällä <b>huudahdusmerkki</b> (!) plus sanamuodon lyhenne. Haulla <b><i>!Adv vihainen</i></b> selailet siis adverbeja, joita esiintyy vihainen-adjektiivin kanssa.</li>
+      <li>etsiä <b>sanamuodon</b> mukaan lisäämällä <b>huutomerkki</b> (!) plus sanamuodon lyhenne. Haulla <b><i>!Adv vihainen</i></b> selailet siis adverbeja, joita esiintyy vihainen-adjektiivin kanssa.</li>
     </ul>
+    <p>&nbsp;</p>
+    <p>Lisäohjeet näihin kaikkiin saa klikkaamalla nurkassa olevaa <b>?-merkkiä</b></p>
   </div>
 )
 export default InstructionBox

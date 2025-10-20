@@ -197,7 +197,7 @@ function App() {
       />
       <div>
         {showInstructions ? <InstructionBox/> : null}
-        {sents.length === 0 && isLoading && showInstructions ? <SentenceBox>Haetaan lauseita</SentenceBox> : null}
+        {sents.length === 0 && isLoading && !showInstructions ? <SentenceBox>Haetaan lauseita</SentenceBox> : null}
         {sents.length > 0 && !showInstructions
           ? <StatsBox
           sents={sents}
