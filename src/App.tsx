@@ -7,6 +7,7 @@ import InstructionBox from './components/InstructionBox'
 import type { KorpResponse, KorpToken, KwicSummary, ApiParams, KorpKwic, Settings } from './types'
 import StatsBox from './components/StatsBox'
 import SettingsModal from './components/SettingsModal'
+import InstructionsModal from './components/InstructionsModal'
 
 // HELPER FUNCTIONS (in order of use)
 
@@ -51,6 +52,7 @@ function App() {
     sentsPerPage: 5,
   })
   const [isSettingsOpen, setIsSettingsOpen] = useState(false)
+  const [isInstructionsOpen, setIsInstructionsOpen] = useState(false)
 
   //Main API function. Retrieves requested search string from Korp API and stores result in 'sents'
   async function fetchData(search: string, corp: string): Promise<void> {
@@ -160,12 +162,16 @@ function App() {
         <button
           type="button"
           className="absolute right-4 top-1/2 -translate-y-1/2 bg-gray-200 hover:bg-gray-300 text-xl rounded-full w-9 h-9 flex items-center justify-center shadow"
-          aria-label="Asetukset"
-          onClick={() => setIsSettingsOpen(true)}
+          aria-label="Ohjeet"
+          onClick={() => setIsInstructionsOpen(true)}
         >
           ?
         </button>
       </div>
+      <InstructionsModal
+        isOpen={isInstructionsOpen}
+        onClose={() => setIsInstructionsOpen(false)}
+      />
       <SettingsModal
         isOpen={isSettingsOpen}
         initialSettings={settings}
@@ -191,7 +197,7 @@ function App() {
       />
       <div>
         {showInstructions ? <InstructionBox/> : null}
-        {sents.length === 0 && !showInstructions ? <SentenceBox>Haetaan lauseita</SentenceBox> : null}
+        {sents.length === 0 && isLoading && showInstructions ? <SentenceBox>Haetaan lauseita</SentenceBox> : null}
         {sents.length > 0 && !showInstructions
           ? <StatsBox
           sents={sents}
