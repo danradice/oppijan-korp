@@ -30,7 +30,7 @@ const InstructionsModal = ({ isOpen, onClose }) => {
               <p>Yhdistelmällä <b>.+</b> voit esim. etsiä yhdyssanoja, jotka alkavat tai loppuvat tietyllä sanalla. <b>.+puoli</b> löytää yhdyssanoja, jotka loppuvat sanalla &quot;puoli&quot;, ja <b>mega.+</b> löytää yhdyssanoja, jotka alkavat sanalla &quot;mega&quot;</p>
             </li>
             <li>
-              <p>Haku <b>leikepöy(tään|dälle)</b> löytää lauseita, joissa esiintyy leikepöytä-sanan illatiivi tai allatiivi. |-merkki tarkoittaa &quot;tai&quot; ja kaksi eri vaihtoehtoa laitetaan sulkuihin. Lopputulos tarkoittaa siis &quot;leikepöy + joko tään tai dälle&quot;</p>
+              <p>Haku <b>leikepöy(tään|dälle)</b> löytää lauseita, joissa esiintyy leikepöytä-sanan illatiivi tai allatiivi. |-merkki tarkoittaa &quot;tai&quot; ja kaksi eri vaihtoehtoa laitetaan sulkuihin. Lopputulos tarkoittaa siis &quot;<b>leikepöy</b> + joko <b>tään</b> tai <b>dälle</b>&quot;</p>
             </li>
           </ul>
           <p>&nbsp;</p>

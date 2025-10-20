@@ -20,16 +20,7 @@ const InstructionBox = () => (
     <p>Tietyn sanan tai fraasin hakemisen lisäksi voit:</p>
     <ul className="list-disc pl-6">
       <li>
-        käyttää <b>säännöllisiä lausekkeita</b> eli Regex. Kokeile hakea <b><i>.+puoli</i></b>. Se löytää yhdyssanoja, jotka loppuvat sanalla "puoli". (
-        <a
-          href="https://quickref.me/regex"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-600 underline"
-        >
-          Regexin pikaopas englanniksi
-        </a>
-        )
+        käyttää <b>säännöllisiä lausekkeita</b> eli Regex. Kokeile hakea <b><i>.+puoli</i></b>. Se löytää yhdyssanoja, jotka loppuvat sanalla "puoli".
       </li>
       <li>etsiä <b>perusmuodon</b> mukaan lisäämällä <b>yhdysmerkki</b> (-) sanan alkuun. Haulla <b><i>-tehdä hyvää</i></b> saat siis mukaan kaikki tehdä-verbin eri muodot (tekee, teki, tehty jne.).</li>
       <li>etsiä <b>sijan</b> mukaan lisäämällä <b>puolilainausmerkki</b> (') plus sijamuodon lyhenne. Haulla <b><i>raskastaa 'Acc</i></b> löydät siis tapauksia, joissa rakastaa-verbia ei seuraa partatiivi! </li>
