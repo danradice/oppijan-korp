@@ -23,7 +23,7 @@ const InstructionsModal = ({ isOpen, onClose }) => {
           <p>Oppijan Korpin lausehauissa voi käyttää säännöllisiä lausekkeita sekä etsiä lemman, sijan tai sanamuodon mukaan. Alla löydät lisäohjeita näiden toimintojen käyttöön.</p>
           <p>&nbsp;</p>
           <p><strong>Säännölliset lausekkeet eli Regular expressions / regex</strong></p>
-            <p>Regex on tietynlainen &quot;kaavakieli&quot;, jolla voit etsiä sanoja tai fraaseja, jotka täyttävät tietyt ehdot. Jos haluaisit syventyä regexin käyttöön, hyvä johdanto teemaan löytyy sivulta <a href="https://regexone.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">regexone.com</a>. Alla on pari esimerkkiä regex-lausekkeista, joista on erityisesti hyötyä Oppijan Korpissa:</p>
+            <p>Regex on tietynlainen &quot;kaavakieli&quot;, jolla voit etsiä sanoja tai fraaseja, jotka täyttävät tietyt ehdot. Jos haluat syventyä regexin käyttöön, hyvä johdanto teemaan löytyy sivulta <a href="https://regexone.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">regexone.com</a>. Alla on pari esimerkkiä regex-lausekkeista, joista on erityisesti hyötyä Oppijan Korpissa:</p>
           <p>&nbsp;</p>
           <ul className="list-disc pl-6">
             <li>
