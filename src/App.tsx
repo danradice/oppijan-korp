@@ -6,7 +6,6 @@ import SentenceBox from './components/SentenceBox'
 import InstructionBox from './components/InstructionBox'
 import type { KorpResponse, KorpToken, KwicSummary, ApiParams, KorpKwic, Settings } from './types'
 import StatsBox from './components/StatsBox'
-import SettingsModal from './components/SettingsModal'
 import InstructionsModal from './components/InstructionsModal'
 
 // HELPER FUNCTIONS (in order of use)
@@ -51,7 +50,6 @@ function App() {
     maxSents: 20,
     sentsPerPage: 5,
   })
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false)
   const [isInstructionsOpen, setIsInstructionsOpen] = useState(false)
 
   //Main API function. Retrieves requested search string from Korp API and stores result in 'sents'
@@ -172,15 +170,6 @@ function App() {
         isOpen={isInstructionsOpen}
         onClose={() => setIsInstructionsOpen(false)}
       />
-      <SettingsModal
-        isOpen={isSettingsOpen}
-        initialSettings={settings}
-        onSave={(newSettings) => {
-          setSettings(newSettings);
-          setIsSettingsOpen(false);
-        }}
-        onClose={() => setIsSettingsOpen(false)}
-      />
       <Form
         fetchData={fetchData}
         page={page}
@@ -204,6 +193,7 @@ function App() {
           page={page}
           sentsPerPage={settings.sentsPerPage}
           corpus={searchedCorpus}
+          maxSents={settings.maxSents}
           />
           : null}
         {sents.length > 0 && !showInstructions

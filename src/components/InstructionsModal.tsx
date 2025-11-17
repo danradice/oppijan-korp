@@ -3,7 +3,7 @@ const InstructionsModal = ({ isOpen, onClose }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
       {/* Modal box: centered, 80vh height, scrollable content */}
-      <div className="bg-white rounded-2xl shadow-xl w-4/5 max-w-3xl p-6 relative leading-relaxed h-[80vh] flex flex-col">
+      <div className="bg-white rounded-2xl shadow-xl w-4/5 max-w-4xl p-6 relative leading-relaxed h-[80vh] flex flex-col">
         {/* Close button */}
         <button
           onClick={onClose}

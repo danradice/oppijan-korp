@@ -1,6 +1,6 @@
 // Instructions for using app. Displays on initial load
 const InstructionBox = () => (
-  <div className='w-4/5 max-w-3xl mt-5 mx-auto px-5 py-4 border rounded-md shadow-sm leading-relaxed'>
+  <div className='w-4/5 max-w-4xl mt-5 mx-auto px-5 py-4 border rounded-md shadow-sm leading-relaxed'>
     <p className='text-center'><b>Tervetuloa Oppijan Korpiin!</b></p>
     <p>&nbsp;</p>
     <p>

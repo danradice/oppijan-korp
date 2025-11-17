@@ -38,7 +38,7 @@ function Form({ fetchData, page, setPage, isLoading, setIsLoading, sents, settin
         value={search}
         onChange={(event) => setSearch(event.target.value)}
         required
-        className='block flex-1 px-3 py-2 border border-gray-300 form-input rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300'
+        className='block flex-1 px-3 py-2 border border-gray-300 bg-gray-100 form-input rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300'
         />
         <button
         type='submit'
@@ -51,35 +51,37 @@ function Form({ fetchData, page, setPage, isLoading, setIsLoading, sents, settin
           : buttonText}
         </button>
       </div>
-      <div className='flex mt-3 justify-center align-middle'>
-        <label className="mr-4">
-          <input
-            type="radio"
-            name="corpus"
-            value="YLE"
-            checked={corpus === yleCorpus}
-            onChange={() => {
+      <div className='flex mt-3 justify-center align-middle gap-3'>
+        <div className="inline-flex rounded-lg border border-gray-300 p-1 bg-gray-100">
+          <button
+            type="button"
+            onClick={() => {
               setCorpus(yleCorpus)
               setSameCorpus(false)
             }}
-            className="mr-2"
-          />
-          Uutiset
-        </label>
-        <label className="ml-2 mr-auto">
-          <input
-            type="radio"
-            name="corpus"
-            value="S24"
-            checked={corpus === s24Corpus}
-            onChange={() => {
+            className={`px-3 py-1.5 rounded-md transition-all text-sm ${
+              corpus === yleCorpus
+                ? 'bg-white shadow-sm font-semibold'
+                : 'hover:bg-gray-50'
+            }`}
+          >
+            Uutiset
+          </button>
+          <button
+            type="button"
+            onClick={() => {
               setCorpus(s24Corpus)
               setSameCorpus(false)
             }}
-            className="mr-2"
-          />
-          Puhekieli
-        </label>
+            className={`px-3 py-1.5 rounded-md transition-all text-sm ${
+              corpus === s24Corpus
+                ? 'bg-white shadow-sm font-semibold'
+                : 'hover:bg-gray-50'
+            }`}
+          >
+            Keskustelupalsta
+          </button>
+        </div>
         <button
           type="button"
           onClick={() => setIsSettingsOpen(true)}
@@ -94,6 +96,7 @@ function Form({ fetchData, page, setPage, isLoading, setIsLoading, sents, settin
           initialSettings={settings}
           onSave={(newSettings) => {
             setSettings(newSettings)
+            setSameCorpus(false)
             setPage(0)
             setIsSettingsOpen(false)
           }}
