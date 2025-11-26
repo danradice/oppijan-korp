@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:wordpress": "tsc -b && vite build --mode wordpress",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "preview:wordpress": "vite preview --mode wordpress"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.6",
