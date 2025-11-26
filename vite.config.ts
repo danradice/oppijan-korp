@@ -15,6 +15,13 @@ export default defineConfig(({ mode }) => ({
 
     // Empty outDir before build
     emptyOutDir: true,
+
+    // Remove console statements in production
+    minify: 'esbuild',
+  },
+
+  esbuild: {
+    drop: ['console', 'debugger'],
   },
 
   // Set base path for WordPress plugin assets
