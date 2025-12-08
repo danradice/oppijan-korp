@@ -7,9 +7,16 @@ const SettingsModal = ({ initialSettings, isOpen, onSave, onClose }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    let numValue = Number(value);
+
+    // Cap maxSents to prevent API abuse
+    if (name === 'maxSents' && numValue > 50) {
+      numValue = 50;
+    }
+
     setTempSettings((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: numValue,
     }));
   };
  
@@ -33,6 +40,7 @@ const SettingsModal = ({ initialSettings, isOpen, onSave, onClose }) => {
           <div className="flex flex-col w-[60%] sm:flex-1 sm:min-w-0">
             <label className="block text-sm font-medium mb-1" htmlFor="min-pituus">min. pituus</label>
             <input
+              type="number"
               name="minLength"
               value={tempSettings.minLength}
               onChange={handleChange}
@@ -42,6 +50,7 @@ const SettingsModal = ({ initialSettings, isOpen, onSave, onClose }) => {
           <div className="flex flex-col w-[60%] sm:flex-1 sm:min-w-0">
             <label className="block text-sm font-medium mb-1" htmlFor="maks-tulokset">maks. tulokset</label>
             <input
+              type="number"
               name="maxSents"
               value={tempSettings.maxSents}
               onChange={handleChange}
@@ -51,6 +60,7 @@ const SettingsModal = ({ initialSettings, isOpen, onSave, onClose }) => {
           <div className="flex flex-col w-[60%] sm:flex-1 sm:min-w-0">
             <label className="block text-sm font-medium mb-1" htmlFor="tulokset-sivu">tulokset/sivu</label>
             <input
+              type="number"
               name="sentsPerPage"
               value={tempSettings.sentsPerPage}
               onChange={handleChange}

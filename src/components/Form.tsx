@@ -17,6 +17,7 @@ function Form({ fetchData, page, setPage, isLoading, setIsLoading, sents, settin
     // If search string and corpus have not changed then show next page
     if (prevSearch === search && sameCorpus) {
       setPage((prev: number) => (prev*settings.sentsPerPage)+settings.sentsPerPage < sents.length ? prev + 1 : 0)
+
     // Otherwise run a new search
     } else {
       setPrevSearch(search)

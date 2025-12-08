@@ -51,9 +51,20 @@ function App() {
     sentsPerPage: 5,
   })
   const [isInstructionsOpen, setIsInstructionsOpen] = useState(false)
+  // Rate limiting
+  const [lastSearchTime, setLastSearchTime] = useState(0)
+  const search_rate_limit = 2000 // 2 seconds between searches
 
-  //Main API function. Retrieves requested search string from Korp API and stores result in 'sents'
+  // Main API function. Retrieves requested search string from Korp API and stores result in 'sents'
   async function fetchData(search: string, corp: string): Promise<void> {
+    // Rate limiting check
+    const now = Date.now()
+    if (now - lastSearchTime < search_rate_limit) {
+      alert('Odota hetki ennen seuraavaa hakua')
+      return
+    }
+    setLastSearchTime(now)
+
     const korp = "https://www.kielipankki.fi/korp/cgi-bin/korp/korp.cgi"
 
     // Hide instructions on first search
@@ -110,7 +121,9 @@ function App() {
     
     console.log(CQPsearch)
 
-    setSents([]) // Clear previous results
+    // Clear previous results and other settings
+    setSents([])
+    setPage(0)
 
     let sentCount = 0
     for (const corpusName of corpora) {
@@ -154,7 +167,7 @@ function App() {
   }
 
   return (
-    <div className='App flex flex-col '>
+    <div className='App flex flex-col pb-10'>
       <div className="relative flex items-center justify-center mt-5 mb-2">
         <h1 className='text-3xl mx-auto'>Oppijan Korp</h1>
         <button

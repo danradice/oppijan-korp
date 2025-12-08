@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
-export default defineConfig(({ mode }) => ({
+export default defineConfig(({ mode, command }) => ({
   plugins: [react(), tailwindcss()],
 
   build: {
@@ -21,7 +21,8 @@ export default defineConfig(({ mode }) => ({
   },
 
   esbuild: {
-    drop: ['console', 'debugger'],
+    // Only drop console and debugger in production builds, not in dev mode
+    drop: command === 'build' ? ['console', 'debugger'] : [],
   },
 
   // Set base path for WordPress plugin assets
