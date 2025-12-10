@@ -28,7 +28,7 @@ function extractSents(settings: Settings, data: KorpResponse): KwicSummary[] {
     const end = kwicObj.match.end
     return { start, end, tokens }
   })
-  // set minimum sentence length to 10 tokens
+  // set minimum sentence length according to settings
   return results.filter(summary => summary.tokens.length >= settings.minLength)
 }
 
@@ -93,13 +93,14 @@ function App() {
       CQPsearch = search
       .trim()
       .replace(/^\p{L}/u, (match) => `(${match.toLowerCase()}|${match.toUpperCase()})`)
+      .replace(/\?/g, '.+')
       .split(/\s+/)
       .map(word => {
         // ...{num} shorthand for multiple words between
         const wordsBetween = word.match(/^\.\.\.(\d+)$/)
-        // ={word} shorthand for lemma search
+        // -{word} shorthand for lemma search
         const lemmaSearch = word.match(/^-(\p{L}+)/u)
-        // -{pos} shorthand for part of speech search
+        // !{pos} shorthand for part of speech search
         const posSearch = word.match(/^!(\p{L}+)/u)
         // #{case} shorthand for case search
         const caseSearch = word.match(/^'(\p{L}+)/u)
@@ -169,7 +170,6 @@ function App() {
   return (
     <div className='App flex flex-col pb-10'>
       <div className="relative flex items-center justify-center mt-5 mb-2">
-        <h1 className='text-3xl mx-auto'>Oppijan Korp</h1>
         <button
           type="button"
           className="absolute right-4 top-1/2 -translate-y-1/2 bg-gray-200 hover:bg-gray-300 text-xl rounded-full w-9 h-9 flex items-center justify-center shadow"
@@ -196,6 +196,7 @@ function App() {
         setCorpus={setCorpus}
         yleCorpus={yleCorpus}
         s24Corpus={s24Corpus}
+        setShowInstructions={setShowInstructions}
       />
       <div>
         {showInstructions ? <InstructionBox/> : null}

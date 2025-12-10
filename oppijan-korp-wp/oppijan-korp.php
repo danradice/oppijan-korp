@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Oppijan Korp
  * Description: Loads the Oppijan Korp React app into WordPress only when the shortcode is used.
- * Version: 1.0
+ * Version: 1.1
  * Author: Your Name
  */
 

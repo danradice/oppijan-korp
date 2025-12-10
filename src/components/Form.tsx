@@ -3,14 +3,20 @@ import { type FormEvent } from 'react'
 import type { FormProps } from '../types'
 import SettingsModal from './SettingsModal'
 
-function Form({ fetchData, page, setPage, isLoading, setIsLoading, sents, settings, setSettings, corpus, setCorpus, yleCorpus, s24Corpus }: FormProps) {
-  
+function Form({ fetchData, page, setPage, isLoading, setIsLoading, sents, settings, setSettings, corpus, setCorpus, yleCorpus, s24Corpus, setShowInstructions }: FormProps) {
+
   //Search form variables
   const [search, setSearch] = useState('')
   const [prevSearch, setPrevSearch] = useState('empty') // to prevent "Lisää esimerkkejä appearing on initial load"
   const [buttonText, setButtonText] = useState('Etsi')
   const [sameCorpus, setSameCorpus] = useState(false)
   const [isSettingsOpen, setIsSettingsOpen] = useState(false)
+
+  const handleTitleClick = () => {
+    setShowInstructions(true)
+    setSameCorpus(false)
+    setPrevSearch('empty')
+  }
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault()
@@ -32,7 +38,14 @@ function Form({ fetchData, page, setPage, isLoading, setIsLoading, sents, settin
   }
 
   return (
-    <form className='w-3/4 max-w-sm mx-auto' onSubmit={handleSubmit}>
+    <>
+      <h1
+        className='text-3xl text-center mt-5 mb-2 cursor-pointer hover:text-gray-700'
+        onClick={handleTitleClick}
+      >
+        Oppijan Korp
+      </h1>
+      <form className='w-3/4 max-w-sm mx-auto' onSubmit={handleSubmit}>
       <div className='flex mt-5'>
         <input
         name='search'
@@ -105,6 +118,7 @@ function Form({ fetchData, page, setPage, isLoading, setIsLoading, sents, settin
         />
       </div>
     </form>
+    </>
   )
 }
 

@@ -30,6 +30,7 @@ export interface FormProps {
   setCorpus: React.Dispatch<React.SetStateAction<string>>;
   yleCorpus: string;
   s24Corpus: string;
+  setShowInstructions: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface KwicSummary {
