@@ -200,7 +200,7 @@ function App() {
       />
       <div>
         {showInstructions ? <InstructionBox/> : null}
-        {sents.length === 0 && isLoading && !showInstructions ? <SentenceBox>Haetaan lauseita</SentenceBox> : null}
+        {sents.length === 0 && isLoading && !showInstructions ? <SentenceBox align="center">Haetaan lauseita</SentenceBox> : null}
         {sents.length > 0 && !showInstructions
           ? <StatsBox
           sents={sents}
@@ -216,7 +216,7 @@ function App() {
           ))
           : null
         }
-        {sents.length === 0 && !isLoading && !showInstructions ? <SentenceBox>Ei tuloksia</SentenceBox> : null}
+        {sents.length === 0 && !isLoading && !showInstructions ? <SentenceBox align="center">Ei tuloksia</SentenceBox> : null}
       </div>
     </div>
   )

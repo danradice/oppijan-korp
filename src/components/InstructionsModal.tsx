@@ -20,19 +20,13 @@ const InstructionsModal = ({ isOpen, onClose }) => {
         {/* Scrollable body: fills remaining space */}
         <div className="px-2 pt-3 overflow-y-auto flex-1">
           <p>&nbsp;</p>
-          <p>Oppijan Korpin lausehauissa voi käyttää säännöllisiä lausekkeita sekä etsiä lemman, sijan tai sanamuodon mukaan. Alla löydät lisäohjeita näiden toimintojen käyttöön.</p>
+          <p>Oppijan Korpin lausehauissa voi etsiä lemman, sanan osan, sijan tai sanamuodon mukaan sekä käyttää säännöllisiä lausekkeita. Alla löydät lisäohjeita näiden toimintojen käyttöön.</p>
+          <p>&nbsp;</p>
+          <p><strong>Mitä vaan -hakuoperaattori (?)</strong></p>
+          <p>Kysymysmerkki tarkoittaa "mikä vaan merkkijono" eli sillä voi esimerkiksi etsiä yhdyssanoja, jotka alkavat tai loppuvat tietyllä sanalla. <b>?puoli</b> löytää yhdyssanoja, jotka loppuvat sanalla &quot;puoli&quot;, ja <b>mega?</b> löytää yhdyssanoja, jotka alkavat sanalla &quot;mega&quot;. Kysymysmerkin voi lisätä myös sanan sisällä (esim. <b>ri?kko</b>) tai sitä voi käyttää yksinään (esim. <b>paras ? ikinä</b>).</p>
           <p>&nbsp;</p>
           <p><strong>Säännölliset lausekkeet eli Regular expressions / regex</strong></p>
-            <p>Regex on tietynlainen &quot;kaavakieli&quot;, jolla voit etsiä sanoja tai fraaseja, jotka täyttävät tietyt ehdot. Jos haluat syventyä regexin käyttöön, hyvä johdanto teemaan löytyy sivulta <a href="https://regexone.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">regexone.com</a>. Alla on pari esimerkkiä regex-lausekkeista, joista on erityisesti hyötyä Oppijan Korpissa:</p>
-          <p>&nbsp;</p>
-          <ul className="list-disc pl-6">
-            <li>
-              <p>Yhdistelmällä <b>.+</b> voit esim. etsiä yhdyssanoja, jotka alkavat tai loppuvat tietyllä sanalla. <b>.+puoli</b> löytää yhdyssanoja, jotka loppuvat sanalla &quot;puoli&quot;, ja <b>mega.+</b> löytää yhdyssanoja, jotka alkavat sanalla &quot;mega&quot;</p>
-            </li>
-            <li>
-              <p>Haku <b>leikepöy(tään|dälle)</b> löytää lauseita, joissa esiintyy leikepöytä-sanan illatiivi tai allatiivi. |-merkki tarkoittaa &quot;tai&quot; ja kaksi eri vaihtoehtoa laitetaan sulkuihin. Lopputulos tarkoittaa siis &quot;<b>leikepöy</b> + joko <b>tään</b> tai <b>dälle</b>&quot;</p>
-            </li>
-          </ul>
+          <p>Regex on tietynlainen &quot;kaavakieli&quot;, jolla voit etsiä sanoja tai fraaseja, jotka täyttävät tietyt ehdot. Jos haluat syventyä regexin käyttöön, hyvä johdanto teemaan löytyy sivulta <a href="https://regexone.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">regexone.com</a>. Esimerkkinä regex-hauista on <b>leikepöy(tään|dälle)</b>, joka löytää lauseita, joissa esiintyy leikepöytä-sanan illatiivi tai allatiivi. |-merkki tarkoittaa &quot;tai&quot; ja kaksi eri vaihtoehtoa laitetaan sulkuihin. Lopputulos tarkoittaa siis &quot;<b>leikepöy</b> + joko <b>tään</b> tai <b>dälle</b>&quot;.</p>
           <p>&nbsp;</p>
           <p><strong>Lemma-hakuoperaattori (-)</strong></p>
           <p>Lisäämällä yhdysmerkki hakusanan alkuun voit hakea lauseita, joissa esiintyy mikä tahansa sanan eri sija- tai taivutusmuodoista. -kieli löytää siis kielen, kieltä, kieleen jne. -mennä löytää puolestaan menen, menin, mentiin jne.</p>
