@@ -14,12 +14,12 @@ const StatsBox = ({ sents, page, sentsPerPage, corpus, maxSents }: StatsBoxProps
     <div className='w-4/5 max-w-4xl mt-5 mx-auto px-3 py-2 border rounded-md shadow-sm'>
       <div className="flex justify-around items-center w-full">
         <div className="flex flex-col items-center text-center sm:flex-row sm:space-x-2 sm:text-left sm:items-baseline">
-          <span className="text-xs text-gray-500 font-medium">Maks. lauseet:</span>
-          <span className="text-lg font-semibold sm:ml-1">{maxSents}</span>
-        </div>
-        <div className="flex flex-col items-center text-center sm:flex-row sm:space-x-2 sm:text-left sm:items-baseline">
           <span className="text-xs text-gray-500 font-medium">Löydetty:</span>
           <span className="text-lg font-semibold sm:ml-1">{sents.length}</span>
+        </div>
+        <div className="flex flex-col items-center text-center sm:flex-row sm:space-x-2 sm:text-left sm:items-baseline">
+          <span className="text-xs text-gray-500 font-medium">Maksimi:</span>
+          <span className="text-lg font-semibold sm:ml-1">{maxSents}</span>
         </div>
         <div className="flex flex-col items-center text-center sm:flex-row sm:space-x-2 sm:text-left sm:items-baseline">
           <span className="text-xs text-gray-500 font-medium">Näytetään:</span>
