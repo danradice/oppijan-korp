@@ -93,7 +93,7 @@ function App() {
       CQPsearch = search
       .trim()
       .replace(/^\p{L}/u, (match) => `(${match.toLowerCase()}|${match.toUpperCase()})`)
-      .replace(/\?/g, '.+')
+      .replace(/\?/g, '.+') // ? shorthand for .+ regex combination
       .split(/\s+/)
       .map(word => {
         // ...{num} shorthand for multiple words between

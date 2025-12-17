@@ -52,7 +52,7 @@ function Form({ fetchData, page, setPage, isLoading, setIsLoading, sents, settin
         value={search}
         onChange={(event) => setSearch(event.target.value)}
         required
-        className='block flex-1 px-3 py-2 border border-gray-300 bg-gray-100 form-input rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300'
+        className='block flex-1 px-3 py-2 text-base border border-gray-300 bg-gray-100 form-input rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300'
         />
         <button
         type='submit'
