@@ -172,7 +172,7 @@ function App() {
       <div className="relative flex items-center justify-center mt-5 mb-2">
         <button
           type="button"
-          className="absolute right-4 top-1/2 -translate-y-1/2 bg-gray-200 hover:bg-gray-300 text-xl rounded-full w-9 h-9 flex items-center justify-center shadow"
+          className="absolute right-4 top-4 -translate-y-1/2 bg-gray-200 hover:bg-gray-300 text-xl rounded-full w-9 h-9 flex items-center justify-center shadow"
           aria-label="Ohjeet"
           onClick={() => setIsInstructionsOpen(true)}
         >

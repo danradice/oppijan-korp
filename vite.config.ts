@@ -8,7 +8,7 @@ export default defineConfig(({ mode, command }) => ({
 
   build: {
     // Output to wordpress-plugin/dist when building for WordPress
-    outDir: mode === 'wordpress' ? 'wordpress-plugin/dist' : 'dist',
+    outDir: mode === 'wordpress' ? 'oppijan-korp-wp/dist' : 'dist',
 
     // Generate manifest.json for WordPress plugin
     manifest: true,
