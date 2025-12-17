@@ -49,7 +49,7 @@ function oppijan_korp_shortcode() {
     // Load scripts only when shortcode is actually used
     add_action('wp_enqueue_scripts', 'oppijan_korp_enqueue_assets');
 
-    // The mounting point for your React app - matches VITE_MOUNT_ELEMENT_ID in .env.wordpress
+    // The mounting point for the React app - matches VITE_MOUNT_ELEMENT_ID in .env.wordpress
     return '<div id="oppijan-korp-app"></div>';
 }
 add_shortcode('oppijan-korp', 'oppijan_korp_shortcode');
