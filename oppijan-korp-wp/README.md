@@ -40,7 +40,6 @@ This builds the React app with WordPress-specific configuration:
 
 WordPress-specific settings are defined in `.env.wordpress`:
 - `VITE_MOUNT_ELEMENT_ID=oppijan-korp-app` - Must match the div ID in oppijan-korp.php
-- `VITE_IS_WORDPRESS=true` - Flag for WordPress-specific code
 - Add custom WordPress settings as needed
 
 ## Usage

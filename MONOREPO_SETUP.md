@@ -26,15 +26,11 @@ oppijan-korp/
 ### Standalone App (`.env.production`)
 ```env
 VITE_MOUNT_ELEMENT_ID=root
-VITE_APP_TITLE=Oppijan Korp
-VITE_IS_WORDPRESS=false
 ```
 
 ### WordPress Plugin (`.env.wordpress`)
 ```env
 VITE_MOUNT_ELEMENT_ID=oppijan-korp-app
-VITE_APP_TITLE=Oppijan Korp
-VITE_IS_WORDPRESS=true
 ```
 
 ## Build Commands
@@ -76,7 +72,6 @@ npm run preview:wordpress      # Preview WordPress build locally
 
 ## How to Deploy WordPress Plugin
 
-### Option 1: Manual Copy
 ```bash
 # Build the WordPress version
 npm run build:wordpress
@@ -86,9 +81,6 @@ cp -r wordpress-plugin /path/to/wordpress/wp-content/plugins/oppijan-korp
 
 # Activate in WordPress admin and use [oppijan-korp] shortcode
 ```
-
-### Option 2: Automated CI/CD (Coming Next)
-We'll set up GitHub Actions to automatically deploy to your WordPress server.
 
 ## Adding More WordPress-Specific Customization
 
@@ -117,23 +109,4 @@ export const config = {
   showFooter: import.meta.env.VITE_SHOW_FOOTER !== 'false',
   apiEndpoint: import.meta.env.VITE_API_ENDPOINT || '/api',
 }
-```
-
-## Next Steps
-
-1. ✅ Monorepo structure is complete
-2. ⏳ Set up CI/CD pipeline for automated deployment
-3. ⏳ Configure deployment to your WordPress server
-
-## Testing
-
-Test that both builds work correctly:
-
-```bash
-# Build both versions
-npm run build              # Standalone
-npm run build:wordpress    # WordPress
-
-# Verify standalone uses #root
-# Verify WordPress uses #oppijan-korp-app
 ```
