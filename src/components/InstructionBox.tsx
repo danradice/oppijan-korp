@@ -1,9 +1,10 @@
 import ReactMarkdown from 'react-markdown'
 import instructionsText from '../content/instructions.md?raw'
+import ContentBox from './ContentBox'
 
 // Instructions for using app. Displays on initial load
 const InstructionBox = () => (
-  <div className='w-4/5 max-w-4xl mt-5 mx-auto px-5 py-4 border rounded-md shadow-sm leading-relaxed'>
+  <ContentBox padding="large" wrapper="div">
     <p className='text-center font-bold mb-4'>Tervetuloa Oppijan Korpiin!</p>
     <div className='[&_p]:text-left [&_ul]:text-left [&_ul]:list-disc [&_ul]:pl-6'>
       <ReactMarkdown
@@ -21,7 +22,7 @@ const InstructionBox = () => (
         {instructionsText}
       </ReactMarkdown>
     </div>
-  </div>
+  </ContentBox>
 )
 
 export default InstructionBox

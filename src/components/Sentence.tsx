@@ -1,4 +1,4 @@
-import SentenceBox from "./SentenceBox";
+import ContentBox from "./ContentBox";
 import type { KwicSummary } from "../types";
 
 // Ensure correct punctuation spacing
@@ -25,11 +25,11 @@ const Sentence = ({ tokens, start, end }: KwicSummary) => {
   const after = elements.slice(end)
 
   return (
-    <SentenceBox>     
+    <ContentBox>
       {before.join('')}
       <strong>{bold.join('')}</strong>
       {after.join('')}
-    </SentenceBox>
+    </ContentBox>
   )
 }
 

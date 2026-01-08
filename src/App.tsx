@@ -2,7 +2,7 @@ import './App.css'
 import { useState } from 'react'
 import Form from './components/Form'
 import Sentence from './components/Sentence'
-import SentenceBox from './components/SentenceBox'
+import ContentBox from './components/ContentBox'
 import InstructionBox from './components/InstructionBox'
 import type { KorpResponse, KorpToken, KwicSummary, ApiParams, KorpKwic, Settings } from './types'
 import StatsBox from './components/StatsBox'
@@ -200,7 +200,7 @@ function App() {
       />
       <div>
         {showInstructions ? <InstructionBox/> : null}
-        {sents.length === 0 && isLoading && !showInstructions ? <SentenceBox align="center">Haetaan lauseita</SentenceBox> : null}
+        {sents.length === 0 && isLoading && !showInstructions ? <ContentBox align="center">Haetaan lauseita</ContentBox> : null}
         {sents.length > 0 && !showInstructions
           ? <StatsBox
           sents={sents}
@@ -216,7 +216,7 @@ function App() {
           ))
           : null
         }
-        {sents.length === 0 && !isLoading && !showInstructions ? <SentenceBox align="center">Ei tuloksia</SentenceBox> : null}
+        {sents.length === 0 && !isLoading && !showInstructions ? <ContentBox align="center">Ei tuloksia</ContentBox> : null}
       </div>
     </div>
   )
