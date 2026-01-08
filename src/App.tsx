@@ -7,6 +7,7 @@ import InstructionBox from './components/InstructionBox'
 import type { KorpResponse, KorpToken, KwicSummary, ApiParams, KorpKwic, Settings } from './types'
 import StatsBox from './components/StatsBox'
 import InstructionsModal from './components/InstructionsModal'
+import { buildCQPQuery } from './utils/cqpQueryBuilder'
 
 // HELPER FUNCTIONS (in order of use)
 
@@ -85,41 +86,7 @@ function App() {
     console.log(corpora)
 
     // Convert search string to valid CQP query
-    let CQPsearch
-    // allow raw CQP searches
-    if (search[0] === "[") {
-      CQPsearch = search
-    } else {
-      CQPsearch = search
-      .trim()
-      .replace(/^\p{L}/u, (match) => `(${match.toLowerCase()}|${match.toUpperCase()})`)
-      .replace(/\?/g, '.+') // ? shorthand for .+ regex combination
-      .split(/\s+/)
-      .map(word => {
-        // ...{num} shorthand for multiple words between
-        const wordsBetween = word.match(/^\.\.\.(\d+)$/)
-        // -{word} shorthand for lemma search
-        const lemmaSearch = word.match(/^-(\p{L}+)/u)
-        // !{pos} shorthand for part of speech search
-        const posSearch = word.match(/^!(\p{L}+)/u)
-        // #{case} shorthand for case search
-        const caseSearch = word.match(/^'(\p{L}+)/u)
-
-        if (wordsBetween) {
-          return `[]{0,${wordsBetween[1]}}`
-        } else if (lemmaSearch) {
-          return `[lemma = "${lemmaSearch[1]}"]`
-        } else if (posSearch) {
-          return `[pos = "${posSearch[1]}"]`
-        } else if (caseSearch) {
-          return `[msd = ".*${caseSearch[1]}.*"]`
-        } else {
-          return `[word = "${word}"]`
-        }
-      })
-      .join(' ')
-    }
-    
+    const CQPsearch = buildCQPQuery(search)
     console.log(CQPsearch)
 
     // Clear previous results and other settings
