@@ -17,6 +17,11 @@ export interface Settings {
   sentsPerPage: number;
 }
 
+export interface SearchOptions {
+  maxSents: number;
+  minLength: number;
+}
+
 export interface FormProps {
   fetchData: (search: string, corp: string) => Promise<void>;
   setPage: React.Dispatch<React.SetStateAction<number>>;

@@ -4,47 +4,21 @@ import Form from './components/Form'
 import Sentence from './components/Sentence'
 import ContentBox from './components/ContentBox'
 import InstructionBox from './components/InstructionBox'
-import type { KorpResponse, KorpToken, KwicSummary, ApiParams, KorpKwic, Settings } from './types'
+import type { KwicSummary, Settings } from './types'
 import StatsBox from './components/StatsBox'
 import InstructionsModal from './components/InstructionsModal'
 import { buildCQPQuery } from './utils/cqpQueryBuilder'
-
-// HELPER FUNCTIONS (in order of use)
-
-// Build search url for the Korp API
-function buildApiUrl(base: string, params: ApiParams): URL {
-  const url = new URL(base)
-  Object.entries(params).forEach(([key, value]) => {
-    url.searchParams.append(key, String(value))
-  })
-  return url
-}
-
-// Extract search result tokens and start/end indexes
-function extractSents(settings: Settings, data: KorpResponse): KwicSummary[] {
-  const results: KwicSummary[] = data.kwic.map((kwicObj: KorpKwic) => {
-    const tokens = kwicObj.tokens
-      .map((token: KorpToken) => token.word)
-    const start = kwicObj.match.start
-    const end = kwicObj.match.end
-    return { start, end, tokens }
-  })
-  // set minimum sentence length according to settings
-  return results.filter(summary => summary.tokens.length >= settings.minLength)
-}
+import { CORPORA, getCorpusName, parseCorpusString } from './config/corpora'
+import { useRateLimiter } from './hooks/useRateLimiter'
+import { fetchMultipleCorpora } from './utils/korpSearch'
 
 function App() {
-
-  const yleCorpus = 'YLENEWS_FI_2021_S,YLENEWS_FI_2020_S,YLENEWS_FI_2019_S,YLENEWS_FI_2018_S,YLENEWS_FI_2017_S,YLENEWS_FI_2016_S,YLENEWS_FI_2015_S,YLENEWS_FI_2014_S,YLENEWS_FI_2013_S,YLENEWS_FI_2012_S,YLENEWS_FI_2011_S'
-  const s24Corpus = 'S24_2017,S24_2018,S24_2019,S24_2020,S24_2021,S24_2022,S24_2023'
-
-  //State variable for storing retrieved sentences
+  // State variables
   const [sents, setSents] = useState<KwicSummary[]>([])
   const [page, setPage] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
-  const [corpus, setCorpus] = useState(yleCorpus)
+  const [corpus, setCorpus] = useState<string>(CORPORA.YLE.corpora)
   const [searchedCorpus, setSearchedCorpus] = useState("")
-  // Show instructions on initial load
   const [showInstructions, setShowInstructions] = useState(true)
   const [settings, setSettings] = useState<Settings>({
     minLength: 10,
@@ -52,85 +26,50 @@ function App() {
     sentsPerPage: 5,
   })
   const [isInstructionsOpen, setIsInstructionsOpen] = useState(false)
-  // Rate limiting
-  const [lastSearchTime, setLastSearchTime] = useState(0)
-  const search_rate_limit = 2000 // 2 seconds between searches
 
-  // Main API function. Retrieves requested search string from Korp API and stores result in 'sents'
+  // Rate limiting hook
+  const checkRateLimit = useRateLimiter(2000) // 2 seconds between searches
+
+  // Main search handler - coordinates UI state and business logic
   async function fetchData(search: string, corp: string): Promise<void> {
-    // Rate limiting check
-    const now = Date.now()
-    if (now - lastSearchTime < search_rate_limit) {
+    // Check rate limit
+    if (!checkRateLimit()) {
       alert('Odota hetki ennen seuraavaa hakua')
       return
     }
-    setLastSearchTime(now)
 
-    const korp = "https://www.kielipankki.fi/korp/cgi-bin/korp/korp.cgi"
-
-    // Hide instructions on first search
+    // Update UI state
     setShowInstructions(false)
-
-    // Set value of searchedCorpus
-    switch (corpus) {
-      case yleCorpus:
-        setSearchedCorpus("Yle Uutiset")
-        break
-      case s24Corpus:
-        setSearchedCorpus("Suomi24.fi")
-        break
-    }
-
-    // Split corp string into array if it's comma-separated
-    const corpora = corp.split(',').map(c => c.trim()).filter(Boolean)
-    console.log(corpora)
-
-    // Convert search string to valid CQP query
-    const CQPsearch = buildCQPQuery(search)
-    console.log(CQPsearch)
-
-    // Clear previous results and other settings
     setSents([])
     setPage(0)
+    setSearchedCorpus(getCorpusName(corp))
 
-    let sentCount = 0
-    for (const corpusName of corpora) {
-      if (sentCount < settings.maxSents) { // Stops fetching sentences once maxSents values is reached
-        const searchParams: ApiParams = {
-          command: 'query',
-          defaultcontext: '1 sentence',
-          defaultwithin: 'sentence',
-          show: 'sentence',
-          start: 0,
-          end: 100,
-          cut: 20,
-          sort: 'random',
-          corpus: corpusName,
-          cqp: CQPsearch,
-        }
-        const apiUrl = buildApiUrl(korp, searchParams)
+    // Prepare search
+    const corpora = parseCorpusString(corp)
+    const cqpQuery = buildCQPQuery(search)
+    console.log('Searching corpora:', corpora)
+    console.log('CQP query:', cqpQuery)
 
-        try {
-          const response = await fetch(apiUrl)
-          if (response.status === 200) {
-            const data: KorpResponse = await response.json()
-            const extracted = extractSents(settings, data)
-            console.log(extracted)
-            if (sentCount + extracted.length > settings.maxSents ) {
-              extracted.splice(0, extracted.length - (settings.maxSents - sentCount))
-            }
-            sentCount += extracted.length
-            console.log(sentCount)
-            setSents(prev => [...prev, ...extracted])
-          } else {
-            // Optionally handle errors per corpus
-            alert(`Search string not found in ${corpusName}`)
-          }
-        } catch (err) {
-          // Optionally handle fetch errors
-          console.error(`Error fetching from ${corpusName}:`, err)
+    // Execute search with progressive updates
+    try {
+      setIsLoading(true)
+      await fetchMultipleCorpora(
+        corpora,
+        cqpQuery,
+        {
+          maxSents: settings.maxSents,
+          minLength: settings.minLength,
+        },
+        // Progress callback - updates UI as each corpus returns results
+        (incrementalResults) => {
+          setSents(incrementalResults)
         }
-      }
+      )
+    } catch (err) {
+      console.error('Search failed:', err)
+      alert('Haku epäonnistui')
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -161,8 +100,8 @@ function App() {
         setSettings={setSettings}
         corpus={corpus}
         setCorpus={setCorpus}
-        yleCorpus={yleCorpus}
-        s24Corpus={s24Corpus}
+        yleCorpus={CORPORA.YLE.corpora}
+        s24Corpus={CORPORA.S24.corpora}
         setShowInstructions={setShowInstructions}
       />
       <div>
