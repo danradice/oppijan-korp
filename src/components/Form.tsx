@@ -3,6 +3,12 @@ import { type FormEvent } from 'react'
 import type { FormProps } from '../types'
 import SettingsModal from './SettingsModal'
 
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void
+  }
+}
+
 function Form({ fetchData, page, setPage, isLoading, setIsLoading, sents, settings, setSettings, corpus, setCorpus, yleCorpus, s24Corpus, setShowInstructions }: FormProps) {
 
   //Search form variables
@@ -26,6 +32,7 @@ function Form({ fetchData, page, setPage, isLoading, setIsLoading, sents, settin
 
     // Otherwise run a new search
     } else {
+      window.gtag?.('event', 'search', { search_term: search })
       setPrevSearch(search)
       setSameCorpus(true)
       setButtonText('Etsitään')
