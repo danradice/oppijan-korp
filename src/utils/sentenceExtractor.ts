@@ -14,6 +14,12 @@ export function extractSents(settings: SearchOptions, data: KorpResponse): KwicS
     return { start, end, tokens };
   });
 
-  // Set minimum sentence length according to settings
-  return results.filter(summary => summary.tokens.length >= settings.minLength);
+  const seen = new Set<string>();
+  return results.filter(summary => {
+    if (summary.tokens.length < settings.minLength) return false;
+    const key = summary.tokens.join(' ');
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }
