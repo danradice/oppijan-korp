@@ -4,7 +4,7 @@ import Form from './components/Form'
 import Sentence from './components/Sentence'
 import ContentBox from './components/ContentBox'
 import InstructionBox from './components/InstructionBox'
-import Footer from './components/Footer'
+import Copyright from './components/Copyright'
 import type { KwicSummary, Settings } from './types'
 import StatsBox from './components/StatsBox'
 import InstructionsModal from './components/InstructionsModal'
@@ -77,14 +77,17 @@ function App() {
   return (
     <div className='App flex flex-col pb-10'>
       <div className="relative flex items-center justify-center mt-5 mb-2">
-        <button
-          type="button"
-          className="absolute right-4 top-4 -translate-y-1/2 bg-gray-200 hover:bg-gray-300 text-xl rounded-full w-9 h-9 flex items-center justify-center shadow"
-          aria-label="Ohjeet"
-          onClick={() => setIsInstructionsOpen(true)}
-        >
-          ?
-        </button>
+        <div className="absolute right-4 top-4 -translate-y-1/2 flex items-center gap-3">
+          <Copyright />
+          <button
+            type="button"
+            className="bg-gray-200 hover:bg-gray-300 text-xl rounded-full w-9 h-9 flex items-center justify-center shadow"
+            aria-label="Ohjeet"
+            onClick={() => setIsInstructionsOpen(true)}
+          >
+            ?
+          </button>
+        </div>
       </div>
       <InstructionsModal
         isOpen={isInstructionsOpen}
@@ -125,7 +128,6 @@ function App() {
         }
         {sents.length === 0 && !isLoading && !showInstructions ? <ContentBox align="center">Ei tuloksia</ContentBox> : null}
       </div>
-      <Footer />
     </div>
   )
 }
