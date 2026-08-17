@@ -4,6 +4,7 @@ import Form from './components/Form'
 import Sentence from './components/Sentence'
 import ContentBox from './components/ContentBox'
 import InstructionBox from './components/InstructionBox'
+import Footer from './components/Footer'
 import type { KwicSummary, Settings } from './types'
 import StatsBox from './components/StatsBox'
 import InstructionsModal from './components/InstructionsModal'
@@ -124,6 +125,7 @@ function App() {
         }
         {sents.length === 0 && !isLoading && !showInstructions ? <ContentBox align="center">Ei tuloksia</ContentBox> : null}
       </div>
+      <Footer />
     </div>
   )
 }

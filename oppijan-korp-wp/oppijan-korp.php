@@ -4,6 +4,9 @@
  * Description: Loads the Oppijan Korp React app into WordPress only when the shortcode is used.
  * Version: 1.3
  * Author: Daniel Radice
+ * Author URI: https://github.com/danradice/oppijan-korp
+ * License: GPL-3.0-or-later
+ * License URI: https://www.gnu.org/licenses/gpl-3.0.html
  */
 
 function oppijan_korp_enqueue_assets() {

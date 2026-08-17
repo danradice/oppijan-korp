@@ -7,7 +7,7 @@ export default defineConfig(({ mode, command }) => ({
   plugins: [react(), tailwindcss()],
 
   build: {
-    // Output to wordpress-plugin/dist when building for WordPress
+    // Output to oppijan-korp-wp/dist when building for WordPress
     outDir: mode === 'wordpress' ? 'oppijan-korp-wp/dist' : 'dist',
 
     // Generate manifest.json for WordPress plugin
