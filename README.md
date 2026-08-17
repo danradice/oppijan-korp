@@ -5,6 +5,8 @@ A simple web app for finding real Finnish example sentences. It searches the
 readable example sentences — useful for language learners and teachers looking
 for authentic usage of a word, form, or construction.
 
+The public version of this app is published as a Wordpress plugin on the Kielisepät website at [kielisepat.fi/index.php/oppimisetti/oppijan-korp/](https://kielisepat.fi/index.php/oppimisetti/oppijan-korp/)
+
 The interface is in Finnish.
 
 ## Features
