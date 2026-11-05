@@ -20,7 +20,7 @@ First release with a version number in the app and a git tag.
   request per year. This is on by default and is controlled by the
   `fetchCorporaTogether` flag in `src/config/index.ts`. It mainly speeds up
   searches for rarer words, which previously needed one request per year.
-- The app version is shown in the footer next to the copyright notice.
+- The app version is shown in the header next to the copyright notice.
 - Notice in the instructions that the Korp service is currently slow.
 
 ### Changed
