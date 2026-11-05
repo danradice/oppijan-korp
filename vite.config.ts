@@ -1,10 +1,16 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import pkg from './package.json'
 
 // https://vite.dev/config/
 export default defineConfig(({ mode, command }) => ({
   plugins: [react(), tailwindcss()],
+
+  // Expose package.json version to the app
+  define: {
+    __APP_VERSION__: JSON.stringify(pkg.version),
+  },
 
   build: {
     // Output to oppijan-korp-wp/dist when building for WordPress

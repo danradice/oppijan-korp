@@ -18,6 +18,8 @@ function Copyright() {
       >
         GPL-3.0
       </a>
+      {' · '}
+      v{__APP_VERSION__}
     </div>
   )
 }

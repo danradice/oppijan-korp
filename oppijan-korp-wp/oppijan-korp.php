@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Oppijan Korp
  * Description: Loads the Oppijan Korp React app into WordPress only when the shortcode is used.
- * Version: 1.3
+ * Version: 2.0.1
  * Author: Daniel Radice
  * Author URI: https://github.com/danradice/oppijan-korp
  * License: GPL-3.0-or-later

@@ -1,7 +1,7 @@
 {
-  "name": "mini-korp",
+  "name": "oppijan-korp",
   "private": true,
-  "version": "0.0.0",
+  "version": "2.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,7 +9,8 @@
     "build:wordpress": "tsc -b && vite build --mode wordpress",
     "lint": "eslint .",
     "preview": "vite preview",
-    "preview:wordpress": "vite preview --mode wordpress"
+    "preview:wordpress": "vite preview --mode wordpress",
+    "version": "sed -i \"s/^ \\* Version: .*/ * Version: $npm_package_version/\" oppijan-korp-wp/oppijan-korp.php && git add oppijan-korp-wp/oppijan-korp.php"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.6",
