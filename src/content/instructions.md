@@ -1,10 +1,15 @@
-Oppijan Korpin avulla voit poimia esimerkkilauseita nopeasti ja monipuolisesti [Korp-palvelun](https://korp.csc.fi/) korpuksista.\
-Valitsemalla **"Uutiset"** saat lauseita YLE Uutisista.\
-Valitsemalla **"Keskustelupalsta"** saat lauseita Suomi24 keskustelupalstasta.\
-(**HUOM**: keskustelupalstat eivät ole tarkasti moderoituja, joten hakutulosten joukossa voi tulla kaikenlaista.)
+Oppijan Korpin avulla voit poimia esimerkkilauseita nopeasti ja monipuolisesti [Korp-palvelun](https://korp.csc.fi/) korpuksista.
 
 &nbsp;
 
+**HUOM: Korp-palvelu toimii tällä hetkellä hyvin hitaasti, joten Oppijan Korpin tulokset saapuvat paljon hitaammin kuin yleensä.**
+
+&nbsp;
+
+Valitsemalla **"Uutiset"** saat lauseita YLE Uutisista.\
+Valitsemalla **"Keskustelupalsta"** saat lauseita Suomi24 keskustelupalstasta.\
+(**HUOM**: keskustelupalstat eivät ole tarkasti moderoituja, joten hakutulosten joukossa voi tulla kaikenlaista.)
+&nbsp;
 Tietyn sanan tai fraasin hakemisen lisäksi voit etsiä:
 * **sanan osan** mukaan lisäämällä **kysymysmerkki** (?). Kokeile hakea ***?puoli***. Se löytää yhdyssanoja, jotka loppuvat sanalla "puoli".
 * **perusmuodon** mukaan lisäämällä **yhdysmerkki** (-) sanan alkuun. Haulla ***-tehdä hyvää*** saat siis mukaan kaikki tehdä-verbin eri muodot (tekee, teki, tehty jne.).
