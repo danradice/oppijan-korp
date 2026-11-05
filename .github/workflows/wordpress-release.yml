@@ -1,0 +1,47 @@
+# Builds the WordPress plugin and attaches it as a zip to each published release
+name: WordPress plugin release
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  build-plugin:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # Fail if the release tag doesn't match package.json (e.g. v2.0.1 vs 2.0.1)
+      - name: Check version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          if [ "${{ github.event.release.tag_name }}" != "v$VERSION" ]; then
+            echo "Tag ${{ github.event.release.tag_name }} does not match package.json version $VERSION"
+            exit 1
+          fi
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+
+      - run: npm ci
+      - run: npm run build:wordpress
+
+      # WordPress installs the plugin into a folder named after the zip's top-level folder
+      - name: Create zip
+        run: |
+          mkdir -p package/oppijan-korp
+          cp -r oppijan-korp-wp/oppijan-korp.php oppijan-korp-wp/dist package/oppijan-korp/
+          cd package && zip -r "../oppijan-korp-$VERSION.zip" oppijan-korp
+
+      - name: Upload zip to release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "${{ github.event.release.tag_name }}" "oppijan-korp-$VERSION.zip" --clobber

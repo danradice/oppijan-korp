@@ -29,8 +29,10 @@ The interface is in Finnish.
   and the first letter of a search is automatically matched case-insensitively.
 - **Adjustable settings**: minimum sentence length, maximum results (capped at
   50), and results per page.
-- **Progressive results** — sentences appear as each corpus year returns,
-  rather than after the whole search completes.
+- **Single-request search** — by default all corpus years are fetched in one
+  Korp request. Setting `fetchCorporaTogether` to `false` in
+  `src/config/index.ts` switches to one request per year, with sentences
+  appearing as each year returns.
 - **Deduplication and length filtering** of results, plus a built-in rate limit
   of one search every 2 seconds to avoid hammering the Korp API.
 - **Two build targets** from one codebase: a standalone site and a WordPress
@@ -70,16 +72,17 @@ src/
 ├── components/                # Form, Sentence, ContentBox, StatsBox, modals
 ├── config/
 │   ├── corpora.ts             # Corpus definitions and helpers
-│   └── index.ts               # Environment-based config (mount element ID)
+│   └── index.ts               # App config (mount element ID, corpus fetch mode)
 ├── content/instructions.md    # Front-page instructions (markdown)
 ├── hooks/useRateLimiter.ts    # Search rate limiting
 ├── utils/
 │   ├── cqpQueryBuilder.ts     # Search shortcuts → CQP query
-│   ├── korpSearch.ts          # Multi-corpus search with progress callback
+│   ├── korpSearch.ts          # Multi-corpus search (single request or per corpus)
 │   └── sentenceExtractor.ts   # Extract, filter, and dedupe sentences
 ├── App.tsx                    # Coordinates state and search
 └── main.tsx                   # Entry point
 oppijan-korp-wp/               # WordPress plugin (PHP wrapper + built assets)
+.github/workflows/             # Release workflow (builds the plugin zip)
 ```
 
 ## WordPress deployment
@@ -87,6 +90,11 @@ oppijan-korp-wp/               # WordPress plugin (PHP wrapper + built assets)
 The same codebase builds a WordPress plugin. The only difference is the mount
 element ID and asset base path, set per build mode via `.env.production` and
 `.env.wordpress`.
+
+The easiest way to install it is to download `oppijan-korp-<version>.zip`
+from the [GitHub releases](https://github.com/danradice/oppijan-korp/releases)
+and upload it in the WordPress admin under **Plugins → Add New → Upload
+Plugin**. To build it yourself instead:
 
 ```bash
 npm run build:wordpress
@@ -97,6 +105,15 @@ Activate the plugin in the WordPress admin, then place the `[oppijan-korp]`
 shortcode on any page or post. Assets load only on pages using the shortcode.
 See [oppijan-korp-wp/README.md](oppijan-korp-wp/README.md) and
 [MONOREPO_SETUP.md](MONOREPO_SETUP.md) for details.
+
+## Versioning and releases
+
+The version number is set in `package.json` and follows
+[Semantic Versioning](https://semver.org/). It is shown in the app footer and
+kept in sync with the WordPress plugin header by the `npm version` script.
+Each release is tagged `vX.Y.Z`. Publishing a GitHub release automatically
+builds the WordPress plugin and attaches it to the release as a zip file.
+See [CHANGELOG.md](CHANGELOG.md) for the changes in each version.
 
 ## Data source and licence
 

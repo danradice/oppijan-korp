@@ -25,3 +25,6 @@ dist-ssr
 
 # Claude conversation history
 claude.md
+
+# Personal release notes
+VERSIONING.md
