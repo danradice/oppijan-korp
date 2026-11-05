@@ -11,7 +11,8 @@ import InstructionsModal from './components/InstructionsModal'
 import { buildCQPQuery } from './utils/cqpQueryBuilder'
 import { CORPORA, getCorpusName, parseCorpusString } from './config/corpora'
 import { useRateLimiter } from './hooks/useRateLimiter'
-import { fetchMultipleCorpora } from './utils/korpSearch'
+import { fetchCorporaTogether, fetchMultipleCorpora } from './utils/korpSearch'
+import { config } from './config'
 
 function App() {
   // State variables
@@ -51,10 +52,12 @@ function App() {
     console.log('Searching corpora:', corpora)
     console.log('CQP query:', cqpQuery)
 
+    const fetchSentences = config.fetchCorporaTogether ? fetchCorporaTogether : fetchMultipleCorpora
+
     // Execute search with progressive updates
     try {
       setIsLoading(true)
-      await fetchMultipleCorpora(
+      await fetchSentences(
         corpora,
         cqpQuery,
         {

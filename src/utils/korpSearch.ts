@@ -51,3 +51,33 @@ export async function fetchMultipleCorpora(
 
   return results;
 }
+
+/**
+ * Fetch sentences from all corpora in a single Korp request
+ * @param corpora - Array of corpus names to search
+ * @param query - CQP query string
+ * @param options - Search options (maxSents, minLength)
+ * @param onProgress - Optional callback called once with the final results
+ * @returns Array of sentence summaries from all corpora combined
+ * @throws Error if the search fails
+ */
+export async function fetchCorporaTogether(
+  corpora: string[],
+  query: string,
+  options: SearchOptions,
+  onProgress?: OnProgressCallback
+): Promise<KwicSummary[]> {
+  const settings: SearchOptions = {
+    minLength: options.minLength,
+    maxSents: options.maxSents,
+  };
+
+  const data = await searchKorpus({ corpus: corpora.join(','), query });
+  const results = extractSents(settings, data).slice(0, options.maxSents);
+
+  if (onProgress) {
+    onProgress([...results]);
+  }
+
+  return results;
+}
