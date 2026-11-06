@@ -2,10 +2,6 @@ Oppijan Korpin avulla voit poimia esimerkkilauseita nopeasti ja monipuolisesti [
 
 &nbsp;
 
-**HUOM: Korp-palvelu toimii tällä hetkellä hyvin hitaasti, joten Oppijan Korpin tulokset saapuvat paljon hitaammin kuin yleensä.**
-
-&nbsp;
-
 Valitsemalla **"Uutiset"** saat lauseita YLE Uutisista.\
 Valitsemalla **"Keskustelupalsta"** saat lauseita Suomi24 keskustelupalstasta.\
 (**HUOM**: keskustelupalstat eivät ole tarkasti moderoituja, joten hakutulosten joukossa voi tulla kaikenlaista.)
