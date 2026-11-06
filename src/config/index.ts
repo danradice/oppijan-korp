@@ -8,7 +8,7 @@ export const config = {
   mountElementId: import.meta.env.VITE_MOUNT_ELEMENT_ID || 'root',
 
   // Fetch all corpora in one Korp request (true) or one corpus at a time (false)
-  fetchCorporaTogether: true,
+  fetchCorporaTogether: false,
 
   // Add more environment-specific configs here as needed
   // theme: {

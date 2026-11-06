@@ -7,9 +7,15 @@ and this project uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [2.0.2] - 2026-11-06
+
 ### Added
 - GitHub Actions workflow that builds the WordPress plugin and attaches it as
   `oppijan-korp-<version>.zip` to each published GitHub release.
+
+### Changed
+- `fetchCorporaTogether` is now off by default, so searches again send one
+  Korp request per corpus year and show results as each year arrives.
 
 ## [2.0.1] - 2026-11-05
 
@@ -52,5 +58,6 @@ up to version 1.3. Highlights:
   WordPress plugin.
 - **2025-10**: First version of the instructions (ohjeet).
 
-[Unreleased]: https://github.com/danradice/oppijan-korp/compare/v2.0.1...HEAD
+[Unreleased]: https://github.com/danradice/oppijan-korp/compare/v2.0.2...HEAD
+[2.0.2]: https://github.com/danradice/oppijan-korp/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/danradice/oppijan-korp/releases/tag/v2.0.1
