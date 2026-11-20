@@ -22,6 +22,8 @@ export async function fetchMultipleCorpora(
   onProgress?: OnProgressCallback
 ): Promise<KwicSummary[]> {
   const results: KwicSummary[] = [];
+  let failures = 0;
+  let lastError: unknown;
   const settings: SearchOptions = {
     minLength: options.minLength,
     maxSents: options.maxSents,
@@ -45,8 +47,15 @@ export async function fetchMultipleCorpora(
 
     } catch (err) {
       console.error(`Error fetching from ${corpus}:`, err);
+      failures++;
+      lastError = err;
       // Continue to next corpus on error
     }
+  }
+
+  // Report a failed search instead of an empty result when every request failed
+  if (corpora.length > 0 && failures === corpora.length) {
+    throw lastError;
   }
 
   return results;

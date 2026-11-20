@@ -1,5 +1,4 @@
 export interface ApiParams {
-  command: string
   defaultcontext: string
   defaultwithin: string
   show: string
@@ -56,4 +55,5 @@ export interface KorpKwic {
 }
 export interface KorpResponse {
   kwic: KorpKwic[]
+  ERROR?: { type: string; value: string }
 }

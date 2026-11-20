@@ -50,7 +50,7 @@ npm run dev          # dev server at http://localhost:5173
 ```
 
 No API key or backend is required — the app calls the public Korp API
-(`https://www.kielipankki.fi/korp/cgi-bin/korp/korp.cgi`) directly from the
+(`https://www.kielipankki.fi/korp/api8/query`) directly from the
 browser.
 
 ### Scripts

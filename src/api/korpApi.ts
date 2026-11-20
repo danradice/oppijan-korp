@@ -1,6 +1,6 @@
 import type { KorpResponse, ApiParams } from '../types';
 
-export const KORP_BASE_URL = 'https://www.kielipankki.fi/korp/cgi-bin/korp/korp.cgi';
+export const KORP_BASE_URL = 'https://www.kielipankki.fi/korp/api8/query';
 
 /**
  * Build search URL for the Korp API
@@ -32,7 +32,6 @@ export async function searchKorpus(options: KorpSearchOptions): Promise<KorpResp
   const { corpus, query, start = 0, end = 100, cut = 20 } = options;
 
   const params: ApiParams = {
-    command: 'query',
     defaultcontext: '1 sentence',
     defaultwithin: 'sentence',
     show: 'sentence',
@@ -52,5 +51,12 @@ export async function searchKorpus(options: KorpSearchOptions): Promise<KorpResp
     throw new Error(`Search failed for ${corpus}: ${response.status}`);
   }
 
-  return response.json();
+  const data: KorpResponse = await response.json();
+
+  // Korp reports errors with HTTP 200 and an ERROR field instead of results
+  if (data.ERROR) {
+    throw new Error(`Search failed for ${corpus}: ${data.ERROR.type}: ${data.ERROR.value}`);
+  }
+
+  return data;
 }

@@ -7,6 +7,19 @@ and this project uses [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [2.0.3] - 2026-11-20
+
+### Fixed
+- Searches returned no example sentences because the old Korp API address
+  (`/korp/cgi-bin/korp/korp.cgi`) started rejecting every query with an
+  authentication error. The app now uses Kielipankki's current Korp API,
+  `https://www.kielipankki.fi/korp/api8/query`.
+- Errors returned by Korp are now reported as a failed search ("Haku
+  epäonnistui") instead of being shown as an empty result.
+
+### Removed
+- Notice in the instructions that the Korp service is slow.
+
 ## [2.0.2] - 2026-11-06
 
 ### Added
@@ -58,6 +71,7 @@ up to version 1.3. Highlights:
   WordPress plugin.
 - **2025-10**: First version of the instructions (ohjeet).
 
-[Unreleased]: https://github.com/danradice/oppijan-korp/compare/v2.0.2...HEAD
+[Unreleased]: https://github.com/danradice/oppijan-korp/compare/v2.0.3...HEAD
+[2.0.3]: https://github.com/danradice/oppijan-korp/compare/v2.0.2...v2.0.3
 [2.0.2]: https://github.com/danradice/oppijan-korp/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/danradice/oppijan-korp/releases/tag/v2.0.1
