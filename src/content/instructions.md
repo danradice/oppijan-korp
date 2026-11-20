@@ -5,7 +5,9 @@ Oppijan Korpin avulla voit poimia esimerkkilauseita nopeasti ja monipuolisesti [
 Valitsemalla **"Uutiset"** saat lauseita YLE Uutisista.\
 Valitsemalla **"Keskustelupalsta"** saat lauseita Suomi24 keskustelupalstasta.\
 (**HUOM**: keskustelupalstat eivät ole tarkasti moderoituja, joten hakutulosten joukossa voi tulla kaikenlaista.)
+
 &nbsp;
+
 Tietyn sanan tai fraasin hakemisen lisäksi voit etsiä:
 * **sanan osan** mukaan lisäämällä **kysymysmerkki** (?). Kokeile hakea ***?puoli***. Se löytää yhdyssanoja, jotka loppuvat sanalla "puoli".
 * **perusmuodon** mukaan lisäämällä **yhdysmerkki** (-) sanan alkuun. Haulla ***-tehdä hyvää*** saat siis mukaan kaikki tehdä-verbin eri muodot (tekee, teki, tehty jne.).
